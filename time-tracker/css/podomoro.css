@@ -1,0 +1,116 @@
+* {
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Arial', sans-serif;
+    }
+
+    body {
+      background-image: url('https://gifdb.com/images/high/chill-animated-rainy-room-night-c9o0p5ga5bjqkj1g.gif');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      overflow: hidden;
+    }
+
+    .header {
+      position: absolute;
+      top: 20px;
+      left: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .menu-icon {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .mode-switch {
+      margin-top: 60px;
+      display: flex;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 30px;
+      overflow: hidden;
+    }
+
+    .mode-switch button {
+      padding: 12px 24px;
+      border: none;
+      background: transparent;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .mode-switch button.active {
+      background: rgba(255, 255, 255, 0.25);
+    }
+
+    .timer {
+      font-size: 120px;
+      font-weight: bold;
+      margin: 30px 0;
+    }
+
+    .controls {
+      display: flex;
+      gap: 25px;
+    }
+
+    .controls button {
+      font-size: 28px;
+      padding: 15px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.3);
+      border: none;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .controls button:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .spotify-banner {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: rgba(111, 15, 15, 0.9);
+      padding: 16px 20px;
+      border-radius: 15px;
+      max-width: 300px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .spotify-banner button {
+      margin-top: 10px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 10px;
+      background: white;
+      color: black;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .spotify-banner .close {
+      position: absolute;
+      top: 6px;
+      right: 10px;
+      font-size: 18px;
+      cursor: pointer;
+    }
+ 

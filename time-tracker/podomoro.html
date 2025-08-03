@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dream Pomodoro</title>
+  <link rel="stylesheet" href="./css/podomoro.css" />
+</head>
+<body>
+<div class="header">🌙 TIMETRACKER POMODORO</div>
+  <div class="menu-icon">☰</div>
+
+  <div class="mode-switch">
+    <button id="pomodoro" class="active">Pomodoro</button>
+    <button id="shortBreak">Short Break</button>
+    <button id="longBreak">Long Break</button>
+  </div>
+
+  <div class="timer" id="timer">25:00</div>
+
+  <div class="controls">
+    <button id="startPause">⏸️</button>
+    <button id="reset">🔁</button>
+    <button>⚙️</button>
+    <button>🔊</button>
+  </div>
+
+    <div class="spotify-player">
+     <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5TfxZ7W2gs7Ktt4ZFdIAx6?utm_source=generator" width="400" height="200" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+    </div>
+  </div>
+
+  <script src="./js/podomoro.js"></script>
+</body>
+</html>
