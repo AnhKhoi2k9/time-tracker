@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Goals - StudyZen</title>
+    <link rel="stylesheet" href="styles/lifegoal.css">
+    <link rel="stylesheet" href="styles/sidebar.css">
+</head>
+<body>
+    <div class="layout">
+     <aside class="sidebar">
+      <div class="logo">StudyZen</div>
+      <nav>
+        <ul>
+          <li class="active" data-page="dashboard"><a href="index2.html"><span class="icon">▦</span>Dashboard</a></li>
+          <li data-page="tasks"><a href="tasks.html"><span class="icon">☑</span>Tasks</a></li>
+          <li data-page="calendar"><a href="calendar.html"><span class="icon">🗓</span>Calendar</a></li>
+          <li data-page="pomodoro"><a href="pomodoro.html"><span class="icon">⏱</span>Pomodoro</a></li>
+          <li data-page="chatgpt"><a href="chatgpt.html"><span class="icon">💬</span>ChatGPT</a></li>
+          <li data-page="notes"><a href="note.html"><span class="icon">📝</span>Notes</a></li>
+          <li data-page="profile"><a href="profile.html"><span class="icon">👤</span>Profile</a></li>
+          <li data-page="notifications"><a href="notifications.html"><span class="icon">🔔</span>Notifications</a></li>
+          <li data-page="resources"><a href="resources.html"><span class="icon">🔗</span>Resources</a></li>
+          <li data-page="lifegoals"><a href="lifegoals.html"><span class="icon">🎯</span>Life Goals</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <div class="container">
+        <main class="main-content">
+            <section id="life-goals-section">
+                <h1>Life Goals</h1>
+                <div class="card">
+                    <h2>Thêm mục tiêu</h2>
+                    <input type="text" id="goal-input" placeholder="Nhập mục tiêu..." class="rounded-input">
+                    <button id="add-goal-btn" class="rounded-btn">Thêm</button>
+                </div>
+                <div class="card">
+                    <h2>Chọn thời gian nhắc lại mục tiêu</h2>
+                    <input type="datetime-local" id="remind-datetime" class="rounded-input">
+                    <label style="margin-left:12px;">
+                        <input type="checkbox" id="remind-repeat"> Lặp lại
+                    </label>
+                </div>
+                <div class="card">
+                    <h2>Danh sách mục tiêu</h2>
+                    <ul id="goal-list" class="goal-list"></ul>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="scripts/life-goals.js"></script>
+</body>
+</html> 
