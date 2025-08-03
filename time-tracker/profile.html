@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Profile</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/profile.css">
+  <link rel="stylesheet" href="./css/sidebar.css">
+</head>
+<body>
+    <div class="layout">
+    <aside class="sidebar">
+      <div class="logo">StudyZen</div>
+      <nav>
+        <ul>
+          <li class="active" data-page="dashboard"><a href="index2.html"><span class="icon">▦</span>Dashboard</a></li>
+          <li data-page="tasks"><a href="tasks.html"><span class="icon">☑</span>Tasks</a></li>
+          <li data-page="calendar"><a href="calendar.html"><span class="icon">🗓</span>Calendar</a></li>
+          <li data-page="pomodoro"><a href="pomodoro.html"><span class="icon">⏱</span>Pomodoro</a></li>
+          <li data-page="chatgpt"><a href="chatgpt.html"><span class="icon">💬</span>ChatGPT</a></li>
+          <li data-page="notes"><a href="note.html"><span class="icon">📝</span>Notes</a></li>
+          <li data-page="profile"><a href="profile.html"><span class="icon">👤</span>Profile</a></li>
+          <li data-page="notifications"><a href="notifications.html"><span class="icon">🔔</span>Notifications</a></li>
+          <li data-page="resources"><a href="resources.html"><span class="icon">🔗</span>Resources</a></li>
+          <li data-page="lifegoals"><a href="lifegoals.html"><span class="icon">🎯</span>Life Goals</a></li>
+        </ul>
+      </nav>
+    </aside>
+  <div class="container">
+    <div class="profile-sidebar">
+      <div class="avatar-wrapper">
+        <img id="avatar" src="https://ui-avatars.com/api/?name=User&background=232326&color=fff&size=256" alt="Avatar">
+        <label for="avatarInput" title="Change avatar">
+          <svg width="20" height="20" fill="#fff" viewBox="0 0 24 24"><path d="M12 5.9c-3.37 0-6.1 2.73-6.1 6.1s2.73 6.1 6.1 6.1 6.1-2.73 6.1-6.1-2.73-6.1-6.1-6.1zm0 10.2c-2.26 0-4.1-1.84-4.1-4.1s1.84-4.1 4.1-4.1 4.1 1.84 4.1 4.1-1.84 4.1-4.1 4.1zm7.9-10.2h-2.18l-1.84-2.02c-.2-.22-.49-.35-.78-.35h-4c-.29 0-.58.13-.78.35l-1.84 2.02h-2.18c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h15.8c1.1 0 2-.9 2-2v-12c0-1.1-.9-2-2-2zm0 14h-15.8v-12h3.38l2.02-2.22h4.6l2.02 2.22h3.38v12z"/></svg>
+          <input type="file" id="avatarInput" accept="image/*">
+        </label>
+      </div>
+      <div class="profile-info">
+        <h2 id="username">User Name</h2>
+        <p id="userbio">This is your bio. You can edit it in settings.</p>
+      </div>
+      <div class="profile-actions">
+        <button onclick="alert('Logged out!')">Log Out</button>
+      </div>
+    </div>
+    <div class="profile-main">
+      <div class="notes-section">
+        <h3>Notes</h3>
+        <ul class="notes-list" id="notesList">
+          <!-- Notes will appear here -->
+        </ul>
+        <form class="add-note-form" id="addNoteForm">
+          <input type="text" id="noteInput" placeholder="Add a new note..." required>
+          <button type="submit">Add</button>
+        </form>
+      </div>
+      <div class="settings-section">
+        <h3>Profile Settings</h3>
+        <form id="settingsForm">
+          <label for="nameInput">Name</label>
+          <input type="text" id="nameInput" value="User Name">
+          <label for="bioInput">Bio</label>
+          <input type="text" id="bioInput" value="This is your bio. You can edit it in settings.">
+          <button type="submit">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script src="js/profile.js"></script>
+   
+  </script>
+</body>
+</html>
