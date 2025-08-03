@@ -1,0 +1,463 @@
+body {
+    font-family: 'Inter', Arial, sans-serif;
+    background: linear-gradient(135deg, #b0e7ff 0%, #95dfff 50%, #95dfff 100%);
+    margin: 0;
+    padding: 0;
+    color: #222;
+}
+
+.navbar {
+    width: 100%;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    padding: 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.navbar-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 64px;
+    padding: 0 32px;
+    position: relative;
+}
+
+.nav-menu {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+.menu-list {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+}
+.menu-list li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 700;
+    font-size: 1.08rem;
+    transition: color 0.3s ease;
+    letter-spacing: 0.5px;
+}
+.menu-list li a:hover {
+    color: #1e88e5;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+}
+.logo-icon {
+    background: #f6f6f6;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    padding: 4px 10px;
+    margin-right: 8px;
+    border: 1px solid #e5e5e5;
+}
+.logo-text {
+    color: #222;
+}
+
+.nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.nav-actions .btn {
+    margin-left: 12px;
+}
+
+.btn {
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    outline: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+.btn-primary {
+    background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+    color: #fff;
+}
+.btn-primary:hover {
+    background: linear-gradient(135deg, #1565c0 0%, #0d47a1 100%);
+}
+.btn-outline {
+    background: #fff;
+    color: #1e88e5;
+    border: 1.5px solid #1e88e5;
+}
+.btn-outline:hover {
+    background: #f0f8ff;
+}
+.full-width {
+    width: 100%;
+}
+
+.main-content {
+    max-width: 1800px;
+    margin: 0 auto;
+    padding: 40px 16px 0 16px;
+}
+
+.hero {
+    text-align: center;
+    margin-top: 48px;
+    margin-bottom: 48px;
+}
+.hero-title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #222;
+}
+.hero-desc {
+    font-size: 1.2rem;
+    color: #555;
+    margin-bottom: 32px;
+}
+.hero-actions .btn {
+    margin: 0 8px;
+    min-width: 140px;
+}
+
+.card-section {
+    display: flex;
+    gap: 70px;
+    justify-content: center;
+    margin-bottom: 48px;
+    flex-wrap: wrap;
+    align-items: stretch;
+}
+.card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    padding: 48px 40px;
+    min-width: 600px;
+    max-width: 700px;
+    min-height: 600px;
+    flex: 1 1 600px;
+    text-align: left;
+    margin-bottom: 24px;
+    display: flex;
+    flex-direction: column;
+}
+.card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #222;
+}
+.card-desc {
+    color: #555;
+    font-size: 1rem;
+}
+
+/* Thêm CSS cho hình ảnh trong card */
+.card img {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 24px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    flex: 1;
+}
+
+.form-section {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-bottom: 64px;
+}
+.form-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.07);
+    padding: 36px 32px 28px 32px;
+    min-width: 320px;
+    max-width: 370px;
+    width: 100%;
+}
+.form-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    text-align: center;
+}
+.form-group {
+    margin-bottom: 18px;
+}
+.form-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 7px;
+    color: #222;
+}
+.form-input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1.5px solid #e5e5e5;
+    border-radius: 8px;
+    font-size: 1rem;
+    background: #f8f9fa;
+    transition: border 0.2s;
+}
+.form-input:focus {
+    border-color: #1e88e5;
+    background: #fff;
+    outline: none;
+}
+.form-footer {
+    text-align: center;
+    margin-top: 18px;
+    font-size: 1rem;
+}
+.form-footer a {
+    color: #1e88e5;
+    text-decoration: none;
+    font-weight: 600;
+    margin-left: 4px;
+}
+.form-footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 900px) {
+    .navbar-content {
+        flex-direction: column;
+        height: auto;
+        padding: 0 10px;
+    }
+    .nav-menu, .nav-actions {
+        width: 100%;
+        justify-content: center;
+        margin: 0;
+    }
+    .logo {
+        position: static;
+        left: unset;
+        transform: none;
+        margin: 10px 0;
+    }
+    .menu-list {
+        justify-content: center;
+        gap: 18px;
+    }
+    .main-content {
+        max-width: 100%;
+        padding: 24px 4vw 0 4vw;
+    }
+    .card-section {
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+    }
+    .form-card {
+        padding: 22px 8px 18px 8px;
+        min-width: 0;
+        max-width: 100vw;
+    }
+    .hero-title {
+        font-size: 1.5rem;
+    }
+    .card {
+        padding: 36px 24px;
+        min-width: 450px;
+        max-width: 100%;
+        min-height: 500px;
+    }
+    /* Responsive cho hình ảnh */
+    .card img {
+        height: 280px;
+        margin: 20px 0;
+    }
+}
+@media (max-width: 600px) {
+    .navbar-content {
+        padding: 0 10px;
+    }
+    .main-content {
+        padding: 16px 2vw 0 2vw;
+    }
+    .form-card {
+        padding: 22px 8px 18px 8px;
+        min-width: 0;
+        max-width: 100vw;
+    }
+    .hero-title {
+        font-size: 1.5rem;
+    }
+    .card {
+        padding: 30px 20px;
+        min-width: 380px;
+        min-height: 450px;
+    }
+    /* Responsive cho hình ảnh trên mobile */
+    .card img {
+        height: 250px;
+        margin: 18px 0;
+    }
+} 
+/* Hiệu ứng bong bóng */
+.bubbles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+  }
+  
+  .bubble {
+    position: absolute;
+    bottom: -100px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    opacity: 0.6;
+    animation: rise 10s infinite ease-in;
+  }
+  
+  .bubble:nth-child(1) {
+    width: 40px;
+    height: 40px;
+    left: 10%;
+    animation-duration: 8s;
+  }
+  
+  .bubble:nth-child(2) {
+    width: 20px;
+    height: 20px;
+    left: 20%;
+    animation-duration: 5s;
+    animation-delay: 1s;
+  }
+  
+  .bubble:nth-child(3) {
+    width: 50px;
+    height: 50px;
+    left: 35%;
+    animation-duration: 7s;
+    animation-delay: 2s;
+  }
+  
+  .bubble:nth-child(4) {
+    width: 30px;
+    height: 30px;
+    left: 50%;
+    animation-duration: 6s;
+    animation-delay: 0s;
+  }
+  
+  .bubble:nth-child(5) {
+    width: 35px;
+    height: 35px;
+    left: 65%;
+    animation-duration: 8s;
+    animation-delay: 1s;
+  }
+  
+  .bubble:nth-child(6) {
+    width: 45px;
+    height: 45px;
+    left: 80%;
+    animation-duration: 6s;
+    animation-delay: 3s;
+  }
+  
+  .bubble:nth-child(7) {
+    width: 25px;
+    height: 25px;
+    left: 90%;
+    animation-duration: 7s;
+    animation-delay: 2s;
+  }
+  
+  .bubble:nth-child(8) {
+    width: 30px;
+    height: 30px;
+    left: 25%;
+    animation-duration: 9s;
+    animation-delay: 4s;
+  }
+  
+  .bubble:nth-child(9) {
+    width: 40px;
+    height: 40px;
+    left: 75%;
+    animation-duration: 5s;
+    animation-delay: 1s;
+  }
+  
+  .bubble:nth-child(10) {
+    width: 35px;
+    height: 35px;
+    left: 45%;
+    animation-duration: 7s;
+    animation-delay: 3s;
+  }
+  
+  @keyframes rise {
+    0% {
+      bottom: -100px;
+      transform: translateX(0);
+    }
+    50% {
+      transform: translate(100px, -500px);
+    }
+    100% {
+      bottom: 1080px;
+      transform: translateX(-200px);
+    }
+  }
+  .footer-content {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 25vh;
+    text-align: center;
+  }
+  .quote {
+    font-style: italic;
+    font-size: 2rem;
+    margin-bottom: 0.2rem;
+  }
+
+  .source {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 4rem;
+  }
+
+  .slogan {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #1a1a1a;
+  }
