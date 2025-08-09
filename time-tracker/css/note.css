@@ -104,16 +104,21 @@ body {
 .layout {
   display: flex;
   min-height: 100vh;
+  
 }
 .sidebar {
   width: 250px;
 }
 .container {
+  max-width: 1200px;
+  margin: 40px auto;
+  background: #1a1a1d;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  padding: 40px 32px;
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center; /* căn giữa nội dung nếu muốn */
-  justify-content: flex-start;
+  align-items: center;
   min-height: 100vh;
-  padding: 40px 0;
 }
