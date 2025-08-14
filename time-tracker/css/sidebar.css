@@ -5,7 +5,11 @@
   display: flex;
   flex-direction: column;
   border-right: 1px solid #232326;
-  position: relative;
+  position: relative;      /* Sửa lại dòng này */
+  left: 0;
+  top: 0;
+  height: 100vh;        /* Thêm dòng này */
+  z-index: 100;         /* Thêm dòng này nếu cần */
 }
 .sidebar .logo {
   font-size: 26px;
@@ -13,6 +17,8 @@
   padding: 0 32px 32px 32px;
   color: #fff;
   letter-spacing: 1px;
+  text-align: center;
+  display: block;
 }
 .sidebar nav {
   flex: 1;
