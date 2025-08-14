@@ -1,16 +1,31 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', Arial, sans-serif;
     margin: 0;
-    padding: 40px;
-    background: #000; /* Nền đen */
+    background: #18181a;
     color: white;
+  }
+  
+  .layout {
     display: flex;
-    justify-content: center;    /* Căn giữa theo chiều ngang */
-    align-items: center;        /* Căn giữa theo chiều dọc */
-    flex-direction: column;
     min-height: 100vh;
   }
   
+  .sidebar {
+    width: 320px;
+  }
+  
+  .main {
+    flex: 1;
+    padding: 40px 0;
+    background: #18181a;
+    min-height: 100vh;
+  }
+  
+  .main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 50px;
+  }
   
   h1 {
     color: #fff;
@@ -30,6 +45,8 @@ body {
     padding: 6px 12px;
     border-radius: 6px;
     border: none;
+    background: #232326;
+    color: #fff;
   }
   
   .calendar {
@@ -104,42 +121,13 @@ body {
     background: #007bff !important;
     color: white !important;
   }
-  .layout {
-    display: flex;
-    min-height: 100vh;
+  
+  @media (max-width: 1000px) {
+    .main-content {
+      padding: 0 16px;
+    }
+    
+    .calendar {
+      padding: 20px 16px;
+    }
   }
-  .sidebar {
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 250px;
-    height: 100vh;
-    background: #151517;
-    border-right: 1px solid #232326;
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    padding-top: 32px;
-  }
-  .container {
-    margin-left: 250px; /* Đẩy nội dung sang phải để không bị sidebar che */
-    max-width: 1200px;
-    background: #1a1a1d;
-    border-radius: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
-    padding: 40px 32px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
-  }
-  .sidebar .logo {
-  font-size: 26px;
-  font-weight: 700;
-  padding: 0 32px 32px 32px;
-  color: #fff;
-  letter-spacing: 1px;
-  text-align: center;
-  display: block;
-}

@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Simple Calendar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./css/calendar.css">
   <link rel="stylesheet" href="./css/sidebar.css">
 </head>
@@ -10,11 +11,11 @@
   <div class="layout">
     <aside class="sidebar">
       <div class="logo">StudyZen</div>
-      <nav class="sidebar-nav">
+      <nav>
         <ul>
-          <li class="active" data-page="dashboard"><a href="index2.html"><span class="icon">▦</span>Dashboard</a></li>
+          <li data-page="dashboard"><a href="index2.html"><span class="icon">▦</span>Dashboard</a></li>
           <li data-page="tasks"><a href="tasks.html"><span class="icon">☑</span>Tasks</a></li>
-          <li data-page="calendar"><a href="calendar.html"><span class="icon">🗓</span>Calendar</a></li>
+          <li class="active" data-page="calendar"><a href="calendar.html"><span class="icon">🗓</span>Calendar</a></li>
           <li data-page="pomodoro"><a href="pomodoro.html"><span class="icon">⏱</span>Pomodoro</a></li>
           <li data-page="chatgpt"><a href="chatgpt.html"><span class="icon">💬</span>ChatGPT</a></li>
           <li data-page="notes"><a href="note.html"><span class="icon">📝</span>Notes</a></li>
@@ -25,32 +26,33 @@
         </ul>
       </nav>
     </aside>
-    <div class="container">
-      <h1>📅 Simple Calendar</h1>
-      <div style="margin-bottom: 20px;">
-        <label for="quickPicker"><strong>Quick select:</strong></label>
-        <input type="date" id="quickPicker">
-      </div>
-      <div class="calendar">
-        <div class="calendar-header">
-          <button onclick="prevMonth()">&lt;</button>
-          <div id="monthYear"></div>
-          <button onclick="nextMonth()">&gt;</button>
+    <main class="main">
+      <div class="main-content">
+        <h1>📅 Simple Calendar</h1>
+        <div style="margin-bottom: 20px;">
+          <label for="quickPicker"><strong>Quick select:</strong></label>
+          <input type="date" id="quickPicker">
         </div>
-        <div class="calendar-grid" id="day-names">
-          <div class="day-name">Sun</div>
-          <div class="day-name">Mon</div>
-          <div class="day-name">Tue</div>
-          <div class="day-name">Wed</div>
-          <div class="day-name">Thu</div>
-          <div class="day-name">Fri</div>
-          <div class="day-name">Sat</div>
+        <div class="calendar">
+          <div class="calendar-header">
+            <button onclick="prevMonth()">&lt;</button>
+            <div id="monthYear"></div>
+            <button onclick="nextMonth()">&gt;</button>
+          </div>
+          <div class="calendar-grid" id="day-names">
+            <div class="day-name">Sun</div>
+            <div class="day-name">Mon</div>
+            <div class="day-name">Tue</div>
+            <div class="day-name">Wed</div>
+            <div class="day-name">Thu</div>
+            <div class="day-name">Fri</div>
+            <div class="day-name">Sat</div>
+          </div>
+          <div class="calendar-grid" id="calendar-days"></div>
         </div>
-        <div class="calendar-grid" id="calendar-days"></div>
       </div>
-    </div>
+    </main>
   </div>
+  <script src="./js/Calendar.js"></script>
 </body>
-
-<script src="./js/Calendar.js"></script>
 </html>

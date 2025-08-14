@@ -1,16 +1,38 @@
 body {
     margin: 0;
-    padding: 30px;
-    background-color: #1e1e1e;
+    background-color: #18181a;
     color: white;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Inter', Arial, sans-serif;
     overflow-x: auto;
+  }
+
+  .layout {
+    display: flex;
+    min-height: 100vh;
+  }
+
+  .sidebar {
+    width: 320px;
+  }
+
+  .main {
+    flex: 1;
+    padding: 40px 0;
+    background: #18181a;
+    min-height: 100vh;
+  }
+
+  .main-content {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 50px;
   }
 
   h1 {
     text-align: center;
     margin-bottom: 30px;
     font-size: 36px;
+    color: #fff;
   }
 
   .week-container {
@@ -21,10 +43,11 @@ body {
   }
 
   .day-column {
-    background-color: #2a2a2a;
+    background-color: #232326;
     border-radius: 12px;
     padding: 20px;
     height: 100%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
   }
 
   .day-column h2 {
@@ -32,6 +55,7 @@ body {
     margin-bottom: 10px;
     border-bottom: 1px solid #444;
     padding-bottom: 6px;
+    color: #fff;
   }
 
   .task-list {
@@ -76,6 +100,8 @@ body {
     border-radius: 6px;
     border: none;
     font-size: 14px;
+    background: #18181a;
+    color: #fff;
   }
 
   .add-task button {
@@ -91,19 +117,14 @@ body {
   .add-task button:hover {
     background-color: #45a049;
   }
-  .layout {
-    display: flex;
-    min-height: 100vh;
-  }
-  .sidebar {
-    width: 250px;
-  }
-  .container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* căn giữa nội dung nếu muốn */
-    justify-content: flex-start;
-    min-height: 100vh;
-    padding: 40px 0;
+
+  @media (max-width: 1000px) {
+    .main-content {
+      padding: 0 16px;
+    }
+    
+    .week-container {
+      grid-template-columns: 1fr;
+      min-width: auto;
+    }
   }

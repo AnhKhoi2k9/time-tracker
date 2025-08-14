@@ -8,18 +8,17 @@
   <link rel="stylesheet" href="./css/sidebar.css">
 </head>
 <body>
-
   <div class="layout">
      <aside class="sidebar">
       <div class="logo">StudyZen</div>
-      <nav class="sidebar-nav">
+      <nav>
         <ul>
-          <li class="active" data-page="dashboard"><a href="index2.html"><span class="icon">▦</span>Dashboard</a></li>
+          <li data-page="dashboard"><a href="index2.html"><span class="icon">▦</span>Dashboard</a></li>
           <li data-page="tasks"><a href="tasks.html"><span class="icon">☑</span>Tasks</a></li>
           <li data-page="calendar"><a href="calendar.html"><span class="icon">🗓</span>Calendar</a></li>
           <li data-page="pomodoro"><a href="pomodoro.html"><span class="icon">⏱</span>Pomodoro</a></li>
           <li data-page="chatgpt"><a href="chatgpt.html"><span class="icon">💬</span>ChatGPT</a></li>
-          <li data-page="notes"><a href="note.html"><span class="icon">📝</span>Notes</a></li>
+          <li class="active" data-page="notes"><a href="note.html"><span class="icon">📝</span>Notes</a></li>
           <li data-page="profile"><a href="profile.html"><span class="icon">👤</span>Profile</a></li>
           <li data-page="notifications"><a href="notifications.html"><span class="icon">🔔</span>Notifications</a></li>
           <li data-page="resources"><a href="resources.html"><span class="icon">🔗</span>Resources</a></li>
@@ -28,28 +27,24 @@
       </nav>
     </aside>
     
-    <div class="container">
-      <h1>Notes</h1>
-      <form class="add-note-form" id="addNoteForm">
-        <input type="text" id="noteInput" placeholder="Add a new note..." required>
-        <input type="date" id="dateInput" required>
-        <button type="submit">Add</button>
-      </form>
-      <div style="margin-bottom:16px;">
-        <label for="viewDateInput" style="color:#bdbdbd;">View notes for date:</label>
-        <input type="date" id="viewDateInput" style="background:#18181a;color:#fff;border:none;border-radius:6px;padding:6px 10px;">
+    <main class="main">
+      <div class="main-content">
+        <h1>Notes</h1>
+        <form class="add-note-form" id="addNoteForm">
+          <input type="text" id="noteInput" placeholder="Add a new note..." required>
+          <input type="date" id="dateInput" required>
+          <button type="submit">Add</button>
+        </form>
+        <div style="margin-bottom:16px;">
+          <label for="viewDateInput" style="color:#bdbdbd;">View notes for date:</label>
+          <input type="date" id="viewDateInput" style="background:#18181a;color:#fff;border:none;border-radius:6px;padding:6px 10px;">
+        </div>
+        <ul class="notes-list" id="notesList"></ul>
+        <div class="no-notes" id="noNotesMsg" style="display:none;">No notes for this day.</div>
       </div>
-      <ul class="notes-list" id="notesList"></ul>
-      <div class="no-notes" id="noNotesMsg" style="display:none;">No notes for this day.</div>
-    </div>
+    </main>
   </div>
 
- 
-
-
   <script src="js/note.js"></script>
- 
-
-  </script>
 </body>
 </html>
