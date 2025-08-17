@@ -20,3 +20,8 @@ const firebaseConfig = {
   
   // Initialize Cloud Storage and get a reference to the service
   const storage = firebase.storage();
+
+  // Cấu hình Google Auth Provider
+  const googleProvider = new firebase.auth.GoogleAuthProvider();
+  googleProvider.addScope('profile');
+  googleProvider.addScope('email');
