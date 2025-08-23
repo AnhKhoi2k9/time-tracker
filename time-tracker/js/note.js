@@ -1,152 +1,103 @@
-// Helper: get today's date in UTC (YYYY-MM-DD)
-    function getTodayUTC() {
-      const now = new Date();
-      return now.toISOString().slice(0, 10);
-    }
+import { initializeApp } from "firebase/app";
+import { getFirestore, collection, addDoc, getDocs, query, where, updateDoc, deleteDoc, doc } from "firebase/firestore";
 
-    // Save/load notes from localStorage (for demo)
-    function loadNotes() {
-      try {
-        return JSON.parse(localStorage.getItem('notes-v2')) || [];
-      } catch {
-        return [];
+const firebaseConfig = {
+  apiKey: "AIzaSyDpdBTdauiwq0RU1lic4kBlMoVbjdW4-co",
+  authDomain: "yghgjhg.firebaseapp.com",
+  projectId: "yghgjhg",
+  storageBucket: "yghgjhg.firebasestorage.app",
+  messagingSenderId: "164220086048",
+  appId: "1:164220086048:web:25f38250b06d16d2b7d945",
+  measurementId: "G-ZF9FRKRCF9"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+function getTodayUTC() {
+  return new Date().toISOString().slice(0, 10);
+}
+
+// Elements
+const addNoteForm = document.getElementById('addNoteForm');
+const noteInput = document.getElementById('noteInput');
+const dateInput = document.getElementById('dateInput');
+const notesList = document.getElementById('notesList');
+const noNotesMsg = document.getElementById('noNotesMsg');
+const viewDateInput = document.getElementById('viewDateInput');
+
+dateInput.value = getTodayUTC();
+viewDateInput.value = getTodayUTC();
+
+// Render notes from Firestore
+async function renderNotes() {
+  const selectedDay = viewDateInput.value || getTodayUTC();
+  notesList.innerHTML = "";
+
+  const q = query(collection(db, "notes"), where("date", "==", selectedDay));
+  const snap = await getDocs(q);
+
+  if (snap.empty) {
+    noNotesMsg.style.display = "block";
+    return;
+  }
+  noNotesMsg.style.display = "none";
+
+  snap.forEach(docSnap => {
+    const note = docSnap.data();
+    const li = document.createElement("li");
+    li.className = "note-item";
+
+    const textDiv = document.createElement("div");
+    textDiv.textContent = note.text;
+    li.appendChild(textDiv);
+
+    const dateDiv = document.createElement("div");
+    dateDiv.className = "note-date";
+    dateDiv.textContent = "Date: " + note.date;
+    li.appendChild(dateDiv);
+
+    const actions = document.createElement("div");
+    actions.className = "note-actions";
+
+    // Edit
+    const editBtn = document.createElement("button");
+    editBtn.textContent = "✎";
+    editBtn.onclick = async () => {
+      const newText = prompt("Edit note:", note.text);
+      if (newText) {
+        await updateDoc(doc(db, "notes", docSnap.id), { text: newText });
+        renderNotes();
       }
-    }
-    function saveNotes(notes) {
-      localStorage.setItem('notes-v2', JSON.stringify(notes));
-    }
+    };
 
-    // Elements
-    const addNoteForm = document.getElementById('addNoteForm');
-    const noteInput = document.getElementById('noteInput');
-    const dateInput = document.getElementById('dateInput');
-    const notesList = document.getElementById('notesList');
-    const noNotesMsg = document.getElementById('noNotesMsg');
-    const viewDateInput = document.getElementById('viewDateInput');
-
-    // Set default date to today (UTC)
-    dateInput.value = getTodayUTC();
-    viewDateInput.value = getTodayUTC();
-
-    // Notes structure: [{text, date, id}]
-    let notes = loadNotes();
-
-    // Render notes for selected day (UTC)
-    function renderNotes() {
-      const selectedDay = viewDateInput.value || getTodayUTC();
-      notesList.innerHTML = '';
-      let hasNotes = false;
-      notes
-        .filter(note => note.date === selectedDay)
-        .forEach(note => {
-          hasNotes = true;
-          const li = document.createElement('li');
-          li.className = 'note-item';
-
-          // Edit mode
-          if (note.editing) {
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.value = note.text;
-            input.className = 'edit-input';
-            input.onkeydown = e => {
-              if (e.key === 'Enter') saveEdit(note.id, input.value);
-              if (e.key === 'Escape') cancelEdit(note.id);
-            };
-            li.appendChild(input);
-
-            const saveBtn = document.createElement('button');
-            saveBtn.textContent = '💾';
-            saveBtn.onclick = () => saveEdit(note.id, input.value);
-            li.appendChild(saveBtn);
-
-            const cancelBtn = document.createElement('button');
-            cancelBtn.textContent = '✕';
-            cancelBtn.onclick = () => cancelEdit(note.id);
-            li.appendChild(cancelBtn);
-          } else {
-            // Show note
-            const textDiv = document.createElement('div');
-            textDiv.textContent = note.text;
-            li.appendChild(textDiv);
-
-            const dateDiv = document.createElement('div');
-            dateDiv.className = 'note-date';
-            dateDiv.textContent = 'Date: ' + note.date;
-            li.appendChild(dateDiv);
-
-            // Actions
-            const actions = document.createElement('div');
-            actions.className = 'note-actions';
-
-            const editBtn = document.createElement('button');
-            editBtn.title = 'Edit';
-            editBtn.textContent = '✎';
-            editBtn.onclick = () => editNote(note.id);
-
-            const delBtn = document.createElement('button');
-            delBtn.title = 'Delete';
-            delBtn.textContent = '🗑';
-            delBtn.onclick = () => deleteNote(note.id);
-
-            actions.appendChild(editBtn);
-            actions.appendChild(delBtn);
-            li.appendChild(actions);
-          }
-
-          notesList.appendChild(li);
-        });
-      noNotesMsg.style.display = hasNotes ? 'none' : 'block';
-    }
-
-    // Add note
-    addNoteForm.onsubmit = function(e) {
-      e.preventDefault();
-      const text = noteInput.value.trim();
-      const date = dateInput.value;
-      if (!text || !date) return;
-      notes.push({
-        id: Date.now() + Math.random(),
-        text,
-        date,
-      });
-      saveNotes(notes);
-      noteInput.value = '';
-      dateInput.value = getTodayUTC();
+    // Delete
+    const delBtn = document.createElement("button");
+    delBtn.textContent = "🗑";
+    delBtn.onclick = async () => {
+      await deleteDoc(doc(db, "notes", docSnap.id));
       renderNotes();
     };
 
-    // Edit note
-    function editNote(id) {
-      notes = notes.map(note => note.id === id ? {...note, editing: true} : {...note, editing: false});
-      renderNotes();
-    }
-    function saveEdit(id, newText) {
-      notes = notes.map(note =>
-        note.id === id ? {...note, text: newText, editing: false} : note
-      );
-      saveNotes(notes);
-      renderNotes();
-    }
-    function cancelEdit(id) {
-      notes = notes.map(note => ({...note, editing: false}));
-      renderNotes();
-    }
+    actions.appendChild(editBtn);
+    actions.appendChild(delBtn);
+    li.appendChild(actions);
+    notesList.appendChild(li);
+  });
+}
 
-    // Delete note
-    function deleteNote(id) {
-      notes = notes.filter(note => note.id !== id);
-      saveNotes(notes);
-      renderNotes();
-    }
+// Add note
+addNoteForm.onsubmit = async (e) => {
+  e.preventDefault();
+  const text = noteInput.value.trim();
+  const date = dateInput.value;
+  if (!text || !date) return;
 
-    // Khi đổi ngày xem, render lại note
-    viewDateInput.addEventListener('change', renderNotes);
+  await addDoc(collection(db, "notes"), { text, date });
+  noteInput.value = "";
+  renderNotes();
+};
 
-    // Show notes for selected day (UTC) on load
-    renderNotes();
+viewDateInput.addEventListener("change", renderNotes);
 
-    // Optional: update notes at midnight UTC
-    setInterval(() => {
-      renderNotes();
-    }, 60 * 1000); // check every minute
+// Load default
+renderNotes();

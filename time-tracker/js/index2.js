@@ -1,3 +1,19 @@
+import { getFirestore, collection, query, where, getDocs } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+
+// Firebase config của bạn
+const firebaseConfig = {
+    apiKey: "AIzaSyDpdBTdauiwq0RU1lic4kBlMoVbjdW4-co",
+    authDomain: "yghgjhg.firebaseapp.com",
+    projectId: "yghgjhg",
+    storageBucket: "yghgjhg.firebasestorage.app",
+    messagingSenderId: "164220086048",
+    appId: "1:164220086048:web:25f38250b06d16d2b7d945",
+    measurementId: "G-ZF9FRKRCF9"
+  };
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
 const pages = {
   dashboard: `
     <div class="dashboard-title">Dashboard</div>
@@ -196,5 +212,44 @@ function renderCalendar() {
     today = new Date(year, month, 1);
     drawCalendar();
   };
+}
+
+async function renderDashboard() {
+  const mainContent = document.getElementById('mainContent');
+  const todayStr = new Date().toISOString().slice(0, 10);
+
+  // Lấy tasks hôm nay
+  const tasksQuery = query(collection(db, "tasks"), where("date", "==", todayStr));
+  const tasksSnap = await getDocs(tasksQuery);
+  const todayTasks = tasksSnap.docs.map(doc => doc.data());
+
+  // Lấy notes hôm nay
+  const notesQuery = query(collection(db, "notes"), where("date", "==", todayStr));
+  const notesSnap = await getDocs(notesQuery);
+  const todayNotes = notesSnap.docs.map(doc => doc.data());
+
+  mainContent.innerHTML = `
+    <h2>Dashboard - ${todayStr}</h2>
+    <section>
+      <h3>Today's Tasks</h3>
+      <ul>
+        ${todayTasks.length ? todayTasks.map(t => `<li>${t.text}</li>`).join('') : '<li>No tasks for today.</li>'}
+      </ul>
+    </section>
+    <section>
+      <h3>Today's Notes</h3>
+      <ul>
+        ${todayNotes.length ? todayNotes.map(n => `<li>${n.text}</li>`).join('') : '<li>No notes for today.</li>'}
+      </ul>
+    </section>
+    <section>
+      <h3>Calendar</h3>
+      <div>${new Date().toLocaleDateString()}</div>
+    </section>
+  `;
+}
+
+if (window.location.pathname.endsWith('index2.html')) {
+  renderDashboard();
 }
 
