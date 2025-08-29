@@ -1,103 +1,107 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs, query, where, updateDoc, deleteDoc, doc } from "firebase/firestore";
+import { db, auth } from "./firebase-config.js";
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  getDocs,
+  deleteDoc,
+  doc,
+  updateDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDpdBTdauiwq0RU1lic4kBlMoVbjdW4-co",
-  authDomain: "yghgjhg.firebaseapp.com",
-  projectId: "yghgjhg",
-  storageBucket: "yghgjhg.firebasestorage.app",
-  messagingSenderId: "164220086048",
-  appId: "1:164220086048:web:25f38250b06d16d2b7d945",
-  measurementId: "G-ZF9FRKRCF9"
-};
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const noteInput = document.getElementById("noteInput");
+const addNoteBtn = document.getElementById("addNoteBtn");
+const notesList = document.getElementById("notesList");
+const datePicker = document.getElementById("noteDate");
 
-function getTodayUTC() {
-  return new Date().toISOString().slice(0, 10);
+let currentUserUid = null;
+
+onAuthStateChanged(auth, (user) => {
+  currentUserUid = user ? user.uid : null;
+  if (user) {
+    loadNotes();
+  } else {
+    notesList.innerHTML = "<p>Please log in to manage notes.</p>";
+  }
+});
+
+function formatDateLocal(d) {
+  const yyyy = d.getFullYear();
+  const mm = String(d.getMonth() + 1).padStart(2, "0");
+  const dd = String(d.getDate()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd}`;
 }
 
-// Elements
-const addNoteForm = document.getElementById('addNoteForm');
-const noteInput = document.getElementById('noteInput');
-const dateInput = document.getElementById('dateInput');
-const notesList = document.getElementById('notesList');
-const noNotesMsg = document.getElementById('noNotesMsg');
-const viewDateInput = document.getElementById('viewDateInput');
-
-dateInput.value = getTodayUTC();
-viewDateInput.value = getTodayUTC();
-
-// Render notes from Firestore
-async function renderNotes() {
-  const selectedDay = viewDateInput.value || getTodayUTC();
-  notesList.innerHTML = "";
-
-  const q = query(collection(db, "notes"), where("date", "==", selectedDay));
+// Load all notes for current user
+async function loadNotes() {
+  if (!currentUserUid) return;
+  notesList.innerHTML = "Loading...";
+  const q = query(
+    collection(db, "notes"),
+    where("uid", "==", currentUserUid)
+  );
   const snap = await getDocs(q);
 
   if (snap.empty) {
-    noNotesMsg.style.display = "block";
+    notesList.innerHTML = "<p>No notes yet.</p>";
     return;
   }
-  noNotesMsg.style.display = "none";
 
-  snap.forEach(docSnap => {
+  const ul = document.createElement("ul");
+  snap.forEach((docSnap) => {
     const note = docSnap.data();
     const li = document.createElement("li");
-    li.className = "note-item";
+    li.textContent = `[${note.date}] ${note.text}`;
 
-    const textDiv = document.createElement("div");
-    textDiv.textContent = note.text;
-    li.appendChild(textDiv);
-
-    const dateDiv = document.createElement("div");
-    dateDiv.className = "note-date";
-    dateDiv.textContent = "Date: " + note.date;
-    li.appendChild(dateDiv);
-
-    const actions = document.createElement("div");
-    actions.className = "note-actions";
-
-    // Edit
+    // nút edit
     const editBtn = document.createElement("button");
-    editBtn.textContent = "✎";
+    editBtn.textContent = "✏️";
     editBtn.onclick = async () => {
       const newText = prompt("Edit note:", note.text);
       if (newText) {
         await updateDoc(doc(db, "notes", docSnap.id), { text: newText });
-        renderNotes();
+        loadNotes();
       }
     };
 
-    // Delete
+    // nút xóa
     const delBtn = document.createElement("button");
-    delBtn.textContent = "🗑";
+    delBtn.textContent = "❌";
     delBtn.onclick = async () => {
       await deleteDoc(doc(db, "notes", docSnap.id));
-      renderNotes();
+      loadNotes();
     };
 
-    actions.appendChild(editBtn);
-    actions.appendChild(delBtn);
-    li.appendChild(actions);
-    notesList.appendChild(li);
+    li.appendChild(editBtn);
+    li.appendChild(delBtn);
+
+    ul.appendChild(li);
   });
+  notesList.innerHTML = "";
+  notesList.appendChild(ul);
 }
 
-// Add note
-addNoteForm.onsubmit = async (e) => {
-  e.preventDefault();
+// Add new note
+addNoteBtn.onclick = async () => {
   const text = noteInput.value.trim();
-  const date = dateInput.value;
-  if (!text || !date) return;
+  if (!text || !currentUserUid) return;
 
-  await addDoc(collection(db, "notes"), { text, date });
+  let selectedDate;
+  if (datePicker.value) {
+    selectedDate = datePicker.value; // yyyy-mm-dd
+  } else {
+    selectedDate = formatDateLocal(new Date()); // mặc định hôm nay
+  }
+
+  await addDoc(collection(db, "notes"), {
+    text,
+    date: selectedDate,
+    uid: currentUserUid,
+    createdAt: new Date(),
+  });
+
   noteInput.value = "";
-  renderNotes();
+  loadNotes();
 };
-
-viewDateInput.addEventListener("change", renderNotes);
-
-// Load default
-renderNotes();

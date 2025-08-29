@@ -63,7 +63,12 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
+    background: #232326;
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 12px 12px 0 0;
+    font-size: 1.2rem;
+    margin-bottom: 0;
   }
   
   .calendar-header button {
@@ -182,4 +187,51 @@ td.has-event {
 
 td.has-event:hover { 
   background: #ffd966; 
+}
+.calendar-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 4px;
+  background: #232326;
+  color: #fff;
+  font-size: 1rem;
+  margin-top: 10px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px #0002;
+}
+.calendar-table th {
+  background: #28282c;
+  color: #ffd700;
+  padding: 8px 0;
+  border-radius: 6px;
+}
+.calendar-cell {
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  border-radius: 6px;
+  padding: 8px 0;
+  text-align: center;
+  min-width: 32px;
+  min-height: 32px;
+}
+.calendar-cell:hover {
+  background: #e3f2fd;
+  color: #1976d2;
+}
+.calendar-cell.today {
+  background: #1976d2;
+  color: #fff;
+  font-weight: bold;
+  border: 2px solid #1565c0;
+}
+.calendar-cell.selected {
+  background: #ffeb3b;
+  color: #333;
+  font-weight: bold;
+  border: 2px solid #fbc02d;
+}
+#calendarEvents {
+  margin-top: 16px;
+  font-size: 1.1rem;
+  color: #ffd700;
 }

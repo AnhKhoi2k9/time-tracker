@@ -10,9 +10,9 @@ const firebaseConfig = {
     messagingSenderId: "164220086048",
     appId: "1:164220086048:web:25f38250b06d16d2b7d945",
     measurementId: "G-ZF9FRKRCF9"
-  };
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+};
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
 
 const pages = {
   dashboard: `
@@ -101,14 +101,13 @@ function setActive(page) {
   sidebarLinks.forEach(li => {
     li.classList.toggle('active', li.dataset.page === page);
   });
-  mainContent.innerHTML = pages[page] || '';
   if (page === 'dashboard') {
-    renderCalendar();
-    pomodoroInit('pomodoroTimer', 'pomodoroStart', 'pomodoroReset');
-    chatInit();
-  }
-  if (page === 'pomodoro') {
-    pomodoroInit('pomodoroTimer2', 'pomodoroStart2', 'pomodoroReset2');
+    renderDashboard(); // Gọi dashboard động
+  } else {
+    mainContent.innerHTML = pages[page] || '';
+    if (page === 'calendar') renderCalendar();
+    if (page === 'pomodoro') pomodoroInit('pomodoroTimer2', 'pomodoroStart2', 'pomodoroReset2');
+    if (page === 'chatgpt') chatInit();
   }
 }
 
@@ -214,42 +213,40 @@ function renderCalendar() {
   };
 }
 
-async function renderDashboard() {
+// Hiển thị dashboard với dữ liệu mẫu
+function renderDashboard() {
   const mainContent = document.getElementById('mainContent');
-  const todayStr = new Date().toISOString().slice(0, 10);
-
-  // Lấy tasks hôm nay
-  const tasksQuery = query(collection(db, "tasks"), where("date", "==", todayStr));
-  const tasksSnap = await getDocs(tasksQuery);
-  const todayTasks = tasksSnap.docs.map(doc => doc.data());
-
-  // Lấy notes hôm nay
-  const notesQuery = query(collection(db, "notes"), where("date", "==", todayStr));
-  const notesSnap = await getDocs(notesQuery);
-  const todayNotes = notesSnap.docs.map(doc => doc.data());
+  const todayStr = new Date().toLocaleDateString();
 
   mainContent.innerHTML = `
-    <h2>Dashboard - ${todayStr}</h2>
-    <section>
-      <h3>Today's Tasks</h3>
-      <ul>
-        ${todayTasks.length ? todayTasks.map(t => `<li>${t.text}</li>`).join('') : '<li>No tasks for today.</li>'}
-      </ul>
-    </section>
-    <section>
-      <h3>Today's Notes</h3>
-      <ul>
-        ${todayNotes.length ? todayNotes.map(n => `<li>${n.text}</li>`).join('') : '<li>No notes for today.</li>'}
-      </ul>
-    </section>
-    <section>
-      <h3>Calendar</h3>
-      <div>${new Date().toLocaleDateString()}</div>
-    </section>
+    <div class="dashboard-title">Dashboard</div>
+    <div class="dashboard-grid">
+      <div class="card" style="grid-column: span 2;">
+        <div class="card-title">Welcome back!</div>
+        <div>You should continue working on your tasks today.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Today's Tasks</div>
+        <ul>
+          <li>Finish math homework</li>
+          <li>Read chapter 3 of history</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Today's Notes</div>
+        <ul>
+          <li>Math: Focus on integrals</li>
+          <li>History: Important dates</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title">Calendar</div>
+        <div>${todayStr}</div>
+      </div>
+    </div>
   `;
 }
 
-if (window.location.pathname.endsWith('index2.html')) {
-  renderDashboard();
-}
+// Gọi hàm này khi trang dashboard load
+renderDashboard();
 
