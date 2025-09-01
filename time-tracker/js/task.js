@@ -1,15 +1,9 @@
-import { db, auth } from "./firebase-config.js";
-import {
-  collection, addDoc, getDocs, updateDoc, deleteDoc, doc, query, where
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
+console.log("task.js loaded");
 const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const weekContainer = document.getElementById("week");
 const weekHeader = document.getElementById("weekHeader"); // 👈 nhớ thêm div này trong HTML
 const prevBtn = document.getElementById("prevWeek");
 const nextBtn = document.getElementById("nextWeek");
-
 let currentUserUid = null;
 let currentWeekStart = getMonday(new Date()); // ngày Monday của tuần hiện tại
 
@@ -33,7 +27,7 @@ const dayIndexMap = {
   "Thursday": 4, "Friday": 5, "Saturday": 6 
 };
 
-onAuthStateChanged(auth, (user) => {
+firebase.auth().onAuthStateChanged((user) => {
   currentUserUid = user ? user.uid : null;
   if (user) {
     loadTasks();
@@ -46,14 +40,15 @@ onAuthStateChanged(auth, (user) => {
 async function loadTasks() {
   if (!currentUserUid) return;
 
-  const q = query(collection(db, "tasks"), where("uid", "==", currentUserUid));
-  const snap = await getDocs(q);
+  const snap = await firebase.firestore()
+    .collection("tasks")
+    .where("uid", "==", currentUserUid)
+    .get();
 
   weekContainer.innerHTML = "";
 
-  // Hiển thị header tuần
   const endOfWeek = new Date(currentWeekStart);
-  endOfWeek.setDate(endOfWeek.getDate() + 5); // Saturday
+  endOfWeek.setDate(endOfWeek.getDate() + 5);
   weekHeader.textContent = `Week of ${currentWeekStart.toDateString()} - ${endOfWeek.toDateString()}`;
 
   daysOfWeek.forEach(day => {
@@ -81,7 +76,7 @@ async function loadTasks() {
         span.onclick = async () => {
           const newStatus = !li.classList.contains("completed");
           li.classList.toggle("completed");
-          await updateDoc(doc(db, "tasks", t.id), { completed: newStatus });
+          await firebase.firestore().collection("tasks").doc(t.id).update({ completed: newStatus });
         };
 
         const actions = document.createElement("div");
@@ -92,7 +87,7 @@ async function loadTasks() {
         editBtn.onclick = async () => {
           const newText = prompt("Edit task:", t.text);
           if (newText && newText.trim() !== "") {
-            await updateDoc(doc(db, "tasks", t.id), { text: newText.trim() });
+            await firebase.firestore().collection("tasks").doc(t.id).update({ text: newText.trim() });
             loadTasks();
           }
         };
@@ -101,7 +96,7 @@ async function loadTasks() {
         delBtn.textContent = "🗑️";
         delBtn.onclick = async () => {
           if (confirm("Delete this task?")) {
-            await deleteDoc(doc(db, "tasks", t.id));
+            await firebase.firestore().collection("tasks").doc(t.id).delete();
             loadTasks();
           }
         };
@@ -124,10 +119,10 @@ async function loadTasks() {
     button.onclick = async () => {
       const taskText = input.value.trim();
       if (!taskText || !currentUserUid) return;
-      await addDoc(collection(db, "tasks"), {
+      await firebase.firestore().collection("tasks").add({
         text: taskText,
         day,
-        date: taskDate, // 👈 ngày thực tế trong tuần được chọn
+        date: taskDate,
         completed: false,
         uid: currentUserUid,
         createdAt: new Date()
@@ -147,6 +142,7 @@ async function loadTasks() {
     weekContainer.appendChild(column);
   });
 }
+
 
 // Nút điều khiển tuần
 prevBtn.onclick = () => {

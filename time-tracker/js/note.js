@@ -1,107 +1,127 @@
-import { db, auth } from "./firebase-config.js";
-import {
-  collection,
-  addDoc,
-  query,
-  where,
-  getDocs,
-  deleteDoc,
-  doc,
-  updateDoc
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+const notesContainer = document.getElementById("notesContainer");
+  const noteHeader = document.getElementById("noteHeader");
+  const prevBtn = document.getElementById("prevNotesDay");
+  const nextBtn = document.getElementById("nextNotesDay");
 
-const noteInput = document.getElementById("noteInput");
-const addNoteBtn = document.getElementById("addNoteBtn");
-const notesList = document.getElementById("notesList");
-const datePicker = document.getElementById("noteDate");
+  let currentUserUid = null;
+  let currentDate = new Date();
 
-let currentUserUid = null;
+  function formatDateLocal(d) {
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, "0");
+    const dd = String(d.getDate()).padStart(2, "0");
+    return `${yyyy}-${mm}-${dd}`;
+  }
 
-onAuthStateChanged(auth, (user) => {
-  currentUserUid = user ? user.uid : null;
-  if (user) {
+  prevBtn.onclick = () => {
+    currentDate.setDate(currentDate.getDate() - 1);
     loadNotes();
-  } else {
-    notesList.innerHTML = "<p>Please log in to manage notes.</p>";
-  }
-});
+  };
 
-function formatDateLocal(d) {
-  const yyyy = d.getFullYear();
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
-  return `${yyyy}-${mm}-${dd}`;
-}
+  nextBtn.onclick = () => {
+    currentDate.setDate(currentDate.getDate() + 1);
+    loadNotes();
+  };
 
-// Load all notes for current user
-async function loadNotes() {
-  if (!currentUserUid) return;
-  notesList.innerHTML = "Loading...";
-  const q = query(
-    collection(db, "notes"),
-    where("uid", "==", currentUserUid)
-  );
-  const snap = await getDocs(q);
+  auth.onAuthStateChanged((user) => {
+    currentUserUid = user ? user.uid : null;
+    if (user) {
+      loadNotes();
+    } else {
+      notesContainer.innerHTML = `<div style="padding:16px;color:#bdbdbd;">Please log in to manage notes.</div>`;
+    }
+  });
 
-  if (snap.empty) {
-    notesList.innerHTML = "<p>No notes yet.</p>";
-    return;
-  }
+  async function loadNotes() {
+    if (!currentUserUid) return;
 
-  const ul = document.createElement("ul");
-  snap.forEach((docSnap) => {
-    const note = docSnap.data();
-    const li = document.createElement("li");
-    li.textContent = `[${note.date}] ${note.text}`;
+    const dateStr = formatDateLocal(currentDate);
+    noteHeader.textContent = `Notes for ${dateStr}`;
 
-    // nút edit
-    const editBtn = document.createElement("button");
-    editBtn.textContent = "✏️";
-    editBtn.onclick = async () => {
-      const newText = prompt("Edit note:", note.text);
-      if (newText) {
-        await updateDoc(doc(db, "notes", docSnap.id), { text: newText });
-        loadNotes();
-      }
-    };
+    const snap = await db
+      .collection("notes")
+      .where("uid", "==", currentUserUid)
+      .where("date", "==", dateStr)
+      .get();
 
-    // nút xóa
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "❌";
-    delBtn.onclick = async () => {
-      await deleteDoc(doc(db, "notes", docSnap.id));
+    notesContainer.innerHTML = "";
+
+    const column = document.createElement("div");
+    column.className = "day-column";
+
+    const header = document.createElement("h2");
+    header.textContent = dateStr;
+
+    const noteList = document.createElement("ul");
+    noteList.className = "task-list";
+
+    snap.forEach((docSnap) => {
+      const note = { id: docSnap.id, ...docSnap.data() };
+
+      const li = document.createElement("li");
+      li.className = "task-item";
+
+      const span = document.createElement("span");
+      span.textContent = note.text;
+
+      const actions = document.createElement("div");
+      actions.className = "task-actions";
+
+      const editBtn = document.createElement("button");
+      editBtn.textContent = "✎";
+      editBtn.onclick = async () => {
+        const newText = prompt("Edit note:", note.text);
+        if (newText && newText.trim() !== "") {
+          await db.collection("notes").doc(note.id).update({ text: newText.trim() });
+          loadNotes();
+        }
+      };
+
+      const delBtn = document.createElement("button");
+      delBtn.textContent = "🗑️";
+      delBtn.onclick = async () => {
+        if (confirm("Delete this note?")) {
+          await db.collection("notes").doc(note.id).delete();
+          loadNotes();
+        }
+      };
+
+      actions.appendChild(editBtn);
+      actions.appendChild(delBtn);
+
+      li.appendChild(span);
+      li.appendChild(actions);
+      noteList.appendChild(li);
+    });
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.placeholder = `Add note for ${dateStr}`;
+
+    const button = document.createElement("button");
+    button.textContent = "Add";
+    button.onclick = async () => {
+      const text = input.value.trim();
+      if (!text || !currentUserUid) return;
+
+      await db.collection("notes").add({
+        text,
+        date: dateStr,
+        uid: currentUserUid,
+        createdAt: new Date()
+      });
+      input.value = "";
       loadNotes();
     };
 
-    li.appendChild(editBtn);
-    li.appendChild(delBtn);
+    const inputWrapper = document.createElement("div");
+    inputWrapper.className = "add-task";
+    inputWrapper.appendChild(input);
+    inputWrapper.appendChild(button);
 
-    ul.appendChild(li);
-  });
-  notesList.innerHTML = "";
-  notesList.appendChild(ul);
-}
+    column.appendChild(header);
+    column.appendChild(noteList);
+    column.appendChild(inputWrapper);
 
-// Add new note
-addNoteBtn.onclick = async () => {
-  const text = noteInput.value.trim();
-  if (!text || !currentUserUid) return;
-
-  let selectedDate;
-  if (datePicker.value) {
-    selectedDate = datePicker.value; // yyyy-mm-dd
-  } else {
-    selectedDate = formatDateLocal(new Date()); // mặc định hôm nay
+    notesContainer.appendChild(column);
   }
-
-  await addDoc(collection(db, "notes"), {
-    text,
-    date: selectedDate,
-    uid: currentUserUid,
-    createdAt: new Date(),
-  });
-
-  noteInput.value = "";
-  loadNotes();
-};

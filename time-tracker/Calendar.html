@@ -46,9 +46,19 @@
       </div>
     </main>
   </div>
-   <script type="module">
-  import { renderCalendar } from "./js/Calendar.js";
-  renderCalendar();
+<!-- Firebase App -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+<!-- Firebase Auth -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+<!-- Firebase Firestore -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore-compat.js"></script>
+
+<!-- Cấu hình Firebase -->
+<script src="js/firebase-config.js"></script>
+
+<!-- Code Calendar sử dụng Firebase -->
+<script src="./js/Calendar.js"></script>
+
 </script>
 </body>
 </html>

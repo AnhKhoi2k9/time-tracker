@@ -1,28 +1,20 @@
-import { db, auth } from "./firebase-config.js";
-import {
-  collection,
-  query,
-  where,
-  getDocs
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
 let currentUserUid = null;
 
-onAuthStateChanged(auth, (user) => {
+// Lắng nghe trạng thái đăng nhập
+firebase.auth().onAuthStateChanged((user) => {
   currentUserUid = user ? user.uid : null;
   if (document.getElementById("calendarTable")) {
     renderCalendar();
   }
 });
 
-// ✅ xuất cho HTML gọi
-export function renderCalendar() {
+function renderCalendar() {
   const calendarTable = document.getElementById("calendarTable");
   const calMonth = document.getElementById("calMonth");
   const calPrev = document.getElementById("calPrev");
   const calNext = document.getElementById("calNext");
   const quickPicker = document.getElementById("quickPicker");
+
   let today = new Date();
   let currentMonth = today.getMonth();
   let currentYear = today.getFullYear();
@@ -30,11 +22,6 @@ export function renderCalendar() {
   function pad(n) {
     return n < 10 ? "0" + n : n;
   }
-  if (quickPicker)
-    quickPicker.value = `${currentYear}-${pad(currentMonth + 1)}-${pad(
-      today.getDate()
-    )}`;
-
   function formatDateLocal(d) {
     const yyyy = d.getFullYear();
     const mm = String(d.getMonth() + 1).padStart(2, "0");
@@ -42,9 +29,16 @@ export function renderCalendar() {
     return `${yyyy}-${mm}-${dd}`;
   }
 
+  if (quickPicker) {
+    quickPicker.value = `${currentYear}-${pad(currentMonth + 1)}-${pad(
+      today.getDate()
+    )}`;
+  }
+
   async function updateCalendar(month, year) {
     const firstDay = new Date(year, month, 1).getDay();
     const daysInMonth = new Date(year, month + 1, 0).getDate();
+
     calMonth.textContent = new Date(year, month).toLocaleString(undefined, {
       month: "long",
       year: "numeric",
@@ -55,36 +49,35 @@ export function renderCalendar() {
     for (let d of days) html += `<th>${d}</th>`;
     html += "</tr>";
 
-    // 🔎 Query trước toàn bộ tasks/notes của tháng này để highlight
+    // 🔎 Lấy tasks & notes của user trong tháng
     let highlights = new Set();
     if (currentUserUid) {
       const startDate = formatDateLocal(new Date(year, month, 1));
       const endDate = formatDateLocal(new Date(year, month, daysInMonth));
 
-      const tasksQ = query(
-        collection(db, "tasks"),
-        where("uid", "==", currentUserUid)
-      );
-      const notesQ = query(
-        collection(db, "notes"),
-        where("uid", "==", currentUserUid)
-      );
-
-      const [tasksSnap, notesSnap] = await Promise.all([
-        getDocs(tasksQ),
-        getDocs(notesQ),
-      ]);
-
+      // Tasks
+      const tasksSnap = await firebase.firestore()
+        .collection("tasks")
+        .where("uid", "==", currentUserUid)
+        .get();
       tasksSnap.forEach((doc) => {
         const d = doc.data().date;
         if (d >= startDate && d <= endDate) highlights.add(d);
       });
+
+      // Notes
+      const notesSnap = await firebase.firestore()
+        .collection("notes")
+        .where("uid", "==", currentUserUid)
+        .get();
+
       notesSnap.forEach((doc) => {
         const d = doc.data().date;
         if (d >= startDate && d <= endDate) highlights.add(d);
       });
     }
 
+    // Vẽ lịch
     let date = 1;
     for (let i = 0; i < 6; i++) {
       html += "<tr>";
@@ -96,21 +89,20 @@ export function renderCalendar() {
         } else {
           const thisDate = new Date(year, month, date);
           const dateStr = formatDateLocal(thisDate);
-          const isToday =
-            thisDate.toDateString() === new Date().toDateString();
+          const isToday = thisDate.toDateString() === new Date().toDateString();
           const hasData = highlights.has(dateStr);
 
-          html += `<td class="calendar-cell${
-            isToday ? " today" : ""
-          }" data-date="${dateStr}">
-            ${date} ${hasData ? "<span class='dot'></span>" : ""}
-          </td>`;
+          html += `<td class="calendar-cell${isToday ? " today" : ""}" 
+                      data-date="${dateStr}">
+                      ${date} ${hasData ? "<span class='dot'></span>" : ""}
+                   </td>`;
           date++;
         }
       }
       html += "</tr>";
       if (date > daysInMonth) break;
     }
+
     calendarTable.innerHTML = html;
 
     document.querySelectorAll(".calendar-cell").forEach((cell) => {
@@ -132,9 +124,8 @@ export function renderCalendar() {
       currentYear--;
     }
     updateCalendar(currentMonth, currentYear);
-    if (quickPicker)
-      quickPicker.value = `${currentYear}-${pad(currentMonth + 1)}-01`;
   };
+
   calNext.onclick = () => {
     currentMonth++;
     if (currentMonth > 11) {
@@ -142,9 +133,8 @@ export function renderCalendar() {
       currentYear++;
     }
     updateCalendar(currentMonth, currentYear);
-    if (quickPicker)
-      quickPicker.value = `${currentYear}-${pad(currentMonth + 1)}-01`;
   };
+
   if (quickPicker) {
     quickPicker.onchange = () => {
       const d = new Date(quickPicker.value);
@@ -156,7 +146,7 @@ export function renderCalendar() {
 
   updateCalendar(currentMonth, currentYear);
 
-  // Show today's events by default
+  // Show today's events
   const todayCell = document.querySelector(".calendar-cell.today");
   if (todayCell) {
     todayCell.classList.add("selected");
@@ -167,53 +157,43 @@ export function renderCalendar() {
     const dateStr = formatDateLocal(dateObj);
     const calendarEvents = document.getElementById("calendarEvents");
     if (!calendarEvents) return;
-    calendarEvents.innerHTML = `<div>Loading...</div>`;
 
     if (!currentUserUid) {
       calendarEvents.innerHTML = `<div>Please log in to see your events.</div>`;
       return;
     }
 
-    const tasksQuery = query(
-      collection(db, "tasks"),
-      where("uid", "==", currentUserUid),
-      where("date", "==", dateStr)
-    );
-    const tasksSnap = await getDocs(tasksQuery);
-    const tasks = tasksSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    let tasks = [];
+    let notes = [];
 
-    const notesQuery = query(
-      collection(db, "notes"),
-      where("uid", "==", currentUserUid),
-      where("date", "==", dateStr)
-    );
-    const notesSnap = await getDocs(notesQuery);
-    const notes = notesSnap.docs.map((d) => ({ id: d.id, ...d.data() }));
+    // Lấy tasks trong ngày
+    const tasksSnap = await firebase.firestore()
+      .collection("tasks")
+      .where("uid", "==", currentUserUid)
+      .where("date", "==", dateStr)
+      .get();
+    tasks = tasksSnap.docs.map((d) => d.data());
+
+    // Lấy notes trong ngày
+    const notesSnap = await firebase.firestore()
+      .collection("notes")
+      .where("uid", "==", currentUserUid)
+      .where("date", "==", dateStr)
+      .get();
+    notes = notesSnap.docs.map((d) => d.data());
 
     calendarEvents.innerHTML = `
-      <div style="margin-bottom:8px;"><strong>${dateObj.toLocaleDateString()}</strong></div>
+      <div><strong>${dateObj.toLocaleDateString()}</strong></div>
       <section>
         <h4>Tasks</h4>
         <ul>
-          ${
-            tasks.length
-              ? tasks
-                  .map(
-                    (t) => `<li>${t.text}${t.completed ? " ✅" : ""}</li>`
-                  )
-                  .join("")
-              : "<li>No tasks for this day.</li>"
-          }
+          ${tasks.length ? tasks.map((t) => `<li>${t.text}</li>`).join("") : "<li>No tasks</li>"}
         </ul>
       </section>
       <section>
         <h4>Notes</h4>
         <ul>
-          ${
-            notes.length
-              ? notes.map((n) => `<li>${n.text}</li>`).join("")
-              : "<li>No notes for this day.</li>"
-          }
+          ${notes.length ? notes.map((n) => `<li>${n.text}</li>`).join("") : "<li>No notes</li>"}
         </ul>
       </section>
     `;

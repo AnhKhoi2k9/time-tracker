@@ -30,21 +30,23 @@
     <main class="main">
       <div class="main-content">
         <h1>Notes</h1>
-        <form class="add-note-form" id="addNoteForm">
-          <input type="text" id="noteInput" placeholder="Add a new note..." required>
-          <input type="date" id="dateInput" required>
-          <button type="submit">Add</button>
-        </form>
-        <div style="margin-bottom:16px;">
-          <label for="viewDateInput" style="color:#bdbdbd;">View notes for date:</label>
-          <input type="date" id="viewDateInput" style="background:#18181a;color:#fff;border:none;border-radius:6px;padding:6px 10px;">
-        </div>
-        <ul class="notes-list" id="notesList"></ul>
-        <div class="no-notes" id="noNotesMsg" style="display:none;">No notes for this day.</div>
+        <div class="notes-header">
+  <button id="prevNotesDay">⬅️ Previous</button>
+  <span id="noteHeader"></span>
+  <button id="nextNotesDay">Next ➡️</button>
+</div>
+
+<div id="notesContainer"></div>
+
       </div>
+      
     </main>
   </div>
-
-  <script src="js/note.js"></script>
+  <!-- Nhúng Firebase compat -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="./js/firebase-config.js"></script>
+<script src="./js/note.js"></script>
 </body>
 </html>
