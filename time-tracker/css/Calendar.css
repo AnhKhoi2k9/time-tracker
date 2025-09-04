@@ -135,6 +135,7 @@ body {
     .calendar {
       padding: 20px 16px;
     }
+<<<<<<< HEAD
   }
   .day.has-event {
   background: #2f68f8;
@@ -235,3 +236,6 @@ td.has-event:hover {
   font-size: 1.1rem;
   color: #ffd700;
 }
+=======
+  }
+>>>>>>> 81e138b0c4aa620d2413754225f5abedfd7faacb

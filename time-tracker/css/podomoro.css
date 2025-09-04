@@ -1,0 +1,134 @@
+* {
+  margin: 0; 
+  padding: 0; 
+  box-sizing: border-box;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+body {
+  background: #18181a;
+  color: white;
+  overflow-x: hidden;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 320px;
+}
+
+.main {
+  flex: 1;
+  padding: 40px 0;
+  background: #18181a;
+  min-height: 100vh;
+}
+
+.main-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  position: relative;
+}
+
+.header {
+  position: absolute;
+  top: 20px;
+  left: 30px;
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.menu-icon {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 28px;
+  cursor: pointer;
+}
+
+.mode-switch {
+  margin-top: 60px;
+  display: flex;
+  background: rgba(0, 0, 0, 0.4);
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.mode-switch button {
+  padding: 12px 24px;
+  border: none;
+  background: transparent;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.mode-switch button.active {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.timer {
+  font-size: 120px;
+  font-weight: bold;
+  margin: 30px 0;
+}
+
+.controls {
+  display: flex;
+  gap: 25px;
+}
+
+.controls button {
+  font-size: 28px;
+  padding: 15px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.3);
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.controls button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.spotify-player {
+  margin-top: 40px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  padding: 20px;
+}
+
+@media (max-width: 1000px) {
+  .main-content {
+    padding: 0 16px;
+  }
+  
+  .timer {
+    font-size: 80px;
+  }
+  
+  .header {
+    left: 20px;
+    font-size: 18px;
+  }
+  
+  .menu-icon {
+    right: 20px;
+  }
+}
+ 
