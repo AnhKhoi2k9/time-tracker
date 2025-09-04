@@ -6,8 +6,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/index2.css">
   <link rel="stylesheet" href="css/sidebar.css">
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
 </head>
 <body>
   <div class="layout">
@@ -34,6 +32,26 @@
       </div>
     </main>
   </div>
-  <script type="module" src="js/index2.js"></script>
+  <!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
+<!-- Config & Init -->
+<script>
+  const firebaseConfig = {
+  apiKey: "AIzaSyDpdBTdauiwq0RU1lic4kBlMoVbjdW4-co",
+  authDomain: "yghgjhg.firebaseapp.com",
+  projectId: "yghgjhg",
+  storageBucket: "yghgjhg.appspot.com", // ✅ sửa lại appspot.com
+  messagingSenderId: "164220086048",
+  appId: "1:164220086048:web:25f38250b06d16d2b7d945",
+  measurementId: "G-ZF9FRKRCF9"
+};
+  firebase.initializeApp(firebaseConfig);
+  window.db = firebase.firestore();
+</script>
+
+<!-- App logic -->
+<script src="./js/index2.js"></script>
 </body>
 </html>

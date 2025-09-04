@@ -1,44 +1,45 @@
 console.log("task.js loaded");
 const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const weekContainer = document.getElementById("week");
-const weekHeader = document.getElementById("weekHeader"); // 👈 nhớ thêm div này trong HTML
-const prevBtn = document.getElementById("prevWeek");
-const nextBtn = document.getElementById("nextWeek");
 let currentUserUid = null;
-let currentWeekStart = getMonday(new Date()); // ngày Monday của tuần hiện tại
+let currentWeekStart = getMonday(new Date());
 
-// Xác định ngày Monday của 1 tuần bất kỳ
+// Xác định ngày Monday
 function getMonday(d) {
   d = new Date(d);
-  const day = d.getDay(); // 0=Sun … 6=Sat
-  const diff = d.getDate() - day + (day === 0 ? -6 : 1); // chuyển về Monday
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
   return new Date(d.setDate(diff));
 }
 
-// Tính ngày cho cột (Mon…Sat) dựa vào currentWeekStart
 function getDateForDayInWeek(startOfWeek, dayIndex) {
   const d = new Date(startOfWeek);
-  d.setDate(d.getDate() + (dayIndex - 1)); // Monday=1 … Saturday=6
+  d.setDate(d.getDate() + (dayIndex - 1));
   return d.toISOString().slice(0, 10);
 }
 
-const dayIndexMap = { 
-  "Monday": 1, "Tuesday": 2, "Wednesday": 3, 
-  "Thursday": 4, "Friday": 5, "Saturday": 6 
+const dayIndexMap = {
+  "Monday": 1, "Tuesday": 2, "Wednesday": 3,
+  "Thursday": 4, "Friday": 5, "Saturday": 6
 };
 
 firebase.auth().onAuthStateChanged((user) => {
   currentUserUid = user ? user.uid : null;
   if (user) {
-    loadTasks();
-  } else {
-    weekContainer.innerHTML = `<div style="padding:16px;color:#bdbdbd;">Please log in to manage your tasks.</div>`;
+     loadTasks();
   }
 });
 
-// Load tasks cho tuần hiện tại
+// Load tasks
 async function loadTasks() {
   if (!currentUserUid) return;
+
+  // 👉 lấy element sau khi sidebar render lại
+  const weekContainer = document.getElementById("week");
+  const weekHeader = document.getElementById("weekHeader");
+  const prevBtn = document.getElementById("prevWeek");
+  const nextBtn = document.getElementById("nextWeek");
+
+  if (!weekContainer || !weekHeader) return;
 
   const snap = await firebase.firestore()
     .collection("tasks")
@@ -141,16 +142,15 @@ async function loadTasks() {
     column.appendChild(inputWrapper);
     weekContainer.appendChild(column);
   });
+
+  // 👉 gắn lại sự kiện nút tuần
+  prevBtn.onclick = () => {
+    currentWeekStart.setDate(currentWeekStart.getDate() - 7);
+    loadTasks();
+  };
+
+  nextBtn.onclick = () => {
+    currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+    loadTasks();
+  };
 }
-
-
-// Nút điều khiển tuần
-prevBtn.onclick = () => {
-  currentWeekStart.setDate(currentWeekStart.getDate() - 7);
-  loadTasks();
-};
-
-nextBtn.onclick = () => {
-  currentWeekStart.setDate(currentWeekStart.getDate() + 7);
-  loadTasks();
-};
