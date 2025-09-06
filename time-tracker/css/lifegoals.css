@@ -9,9 +9,10 @@ body {
 }
 
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+    max-width: 1800px;
+    margin-left: 440px;
+    margin-right: 20px;
+    padding: 30px 20px 30px 20px;
 }
 
 /* Pro Banner */

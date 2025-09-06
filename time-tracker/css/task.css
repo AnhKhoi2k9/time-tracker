@@ -1,6 +1,7 @@
 body {
     margin: 0;
-    background-color: #18181a;
+  background: url("https://i.pinimg.com/736x/90/70/32/9070324cdfc07c68d60eed0c39e77573.jpg");
+  background-size: cover;
     color: white;
     font-family: 'Inter', Arial, sans-serif;
     overflow-x: auto;
@@ -18,7 +19,6 @@ body {
   .main {
     flex: 1;
     padding: 40px 0;
-    background: #18181a;
     min-height: 100vh;
   }
 
