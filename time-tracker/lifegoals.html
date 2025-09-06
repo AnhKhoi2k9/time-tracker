@@ -3,33 +3,298 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Life Goals - StudyZen</title>
-    <link rel="stylesheet" href="./css/lifegoal.css">
+    <title>Life Goals Pro - StudyZen</title>
+    <link rel="stylesheet" href="./css/lifegoals.css">
 </head>
 <body>
     <div class="container">
+        <!-- Pro Banner -->
+        <div class="pro-banner">
+            <div class="pro-badge">⭐ PRO</div>
+            <div class="pro-info">
+                <h3>Life Goals Pro</h3>
+                <p>Khám phá sức mạnh của mục tiêu thông minh với AI và analytics nâng cao</p>
+            </div>
+            <button class="upgrade-btn" onclick="showUpgradeModal()">Nâng cấp Premium</button>
+        </div>
+
+        <header class="page-header">
+            <div class="header-content">
+                <h1>🎯 Life Goals Pro</h1>
+                <p class="page-description">Định nghĩa và theo dõi mục tiêu cuộc sống với AI và analytics nâng cao</p>
+            </div>
+            <nav class="top-nav">
+                <a href="resources-pro.html" class="nav-link">📚 Resources Pro</a>
+                <a href="life-goals.html" class="nav-link">📱 Phiên bản thường</a>
+                <a href="pro-signup.html" class="nav-link pro-link">⭐ Quản lý tài khoản Pro</a>
+                <a href="index2.html" class="nav-link">🏠 Dashboard</a>
+            </nav>
+        </header>
+
         <main class="main-content">
-            <section id="life-goals-section">
-                <h1>Life Goals</h1>
-                <div class="card">
-                    <h2>Thêm mục tiêu</h2>
-                    <input type="text" id="goal-input" placeholder="Nhập mục tiêu..." class="rounded-input">
-                    <button id="add-goal-btn" class="rounded-btn">Thêm</button>
+            <!-- Advanced Stats Grid -->
+            <div class="stats-grid pro-stats">
+                <div class="stat-card pro-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-content">
+                        <h3>Tổng mục tiêu</h3>
+                        <p class="stat-number" id="total-goals">0</p>
+                        <div class="stat-trend">
+                            <span class="trend-up">↗️ +12%</span>
+                            <span class="trend-period">so với tháng trước</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h2>Chọn thời gian nhắc lại mục tiêu</h2>
+                <div class="stat-card pro-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-content">
+                        <h3>Đã hoàn thành</h3>
+                        <p class="stat-number" id="completed-goals">0</p>
+                        <div class="stat-trend">
+                            <span class="trend-up">↗️ +8%</span>
+                            <span class="trend-period">so với tháng trước</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card pro-card">
+                    <div class="stat-icon">📚</div>
+                    <div class="stat-content">
+                        <h3>Tài liệu liên kết</h3>
+                        <p class="stat-number" id="linked-resources-count">0</p>
+                        <div class="stat-trend">
+                            <span class="trend-up">↗️ +15%</span>
+                            <span class="trend-period">so với tháng trước</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card pro-card">
+                    <div class="stat-icon">🚀</div>
+                    <div class="stat-content">
+                        <h3>Hiệu suất</h3>
+                        <p class="stat-number" id="performance-score">85%</p>
+                        <div class="stat-trend">
+                            <span class="trend-up">↗️ +5%</span>
+                            <span class="trend-period">so với tháng trước</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Goal Suggestions -->
+            <div class="card ai-suggestions">
+                <h2>🤖 AI Goal Suggestions</h2>
+                <div class="ai-content">
+                    <div class="ai-avatar">🤖</div>
+                    <div class="ai-message">
+                        <p>Dựa trên mục tiêu hiện tại, tôi gợi ý bạn thêm:</p>
+                        <div class="suggestion-chips">
+                            <button class="suggestion-chip" onclick="addSuggestedGoal('Học tiếng Anh 30 phút mỗi ngày')">
+                                📚 Học tiếng Anh 30 phút mỗi ngày
+                            </button>
+                            <button class="suggestion-chip" onclick="addSuggestedGoal('Tập thể dục 3 lần/tuần')">
+                                🏃‍♂️ Tập thể dục 3 lần/tuần
+                            </button>
+                            <button class="suggestion-chip" onclick="addSuggestedGoal('Đọc sách 20 phút trước khi ngủ')">
+                                📖 Đọc sách 20 phút trước khi ngủ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goal Templates -->
+            <div class="card templates-section">
+                <h2>📋 Goal Templates</h2>
+                <div class="template-grid">
+                    <div class="template-card" onclick="useTemplate('study')">
+                        <div class="template-icon">📚</div>
+                        <h3>Học tập</h3>
+                        <p>Mẫu mục tiêu cho việc học tập và phát triển kỹ năng</p>
+                        <div class="template-tags">
+                            <span class="tag">Study</span>
+                            <span class="tag">Skills</span>
+                        </div>
+                    </div>
+                    <div class="template-card" onclick="useTemplate('career')">
+                        <div class="template-icon">💼</div>
+                        <h3>Sự nghiệp</h3>
+                        <p>Mẫu mục tiêu cho phát triển nghề nghiệp</p>
+                        <div class="template-tags">
+                            <span class="tag">Career</span>
+                            <span class="tag">Growth</span>
+                        </div>
+                    </div>
+                    <div class="template-card" onclick="useTemplate('health')">
+                        <div class="template-icon">🏃‍♂️</div>
+                        <h3>Sức khỏe</h3>
+                        <p>Mẫu mục tiêu cho sức khỏe và thể chất</p>
+                        <div class="template-tags">
+                            <span class="tag">Health</span>
+                            <span class="tag">Fitness</span>
+                        </div>
+                    </div>
+                    <div class="template-card" onclick="useTemplate('personal')">
+                        <div class="template-icon">👤</div>
+                        <h3>Cá nhân</h3>
+                        <p>Mẫu mục tiêu cho phát triển cá nhân</p>
+                        <div class="template-tags">
+                            <span class="tag">Personal</span>
+                            <span class="tag">Growth</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card goal-form">
+                <h2>➕ Thêm mục tiêu mới</h2>
+                <div class="form-group">
+                    <input type="text" id="goal-input" placeholder="Nhập mục tiêu của bạn..." class="rounded-input">
+                    <select id="goal-category" class="rounded-input" data-type="select">
+                        <option value="">Chọn danh mục</option>
+                        <option value="study">📚 Học tập</option>
+                        <option value="career">💼 Sự nghiệp</option>
+                        <option value="health">🏃‍♂️ Sức khỏe</option>
+                        <option value="personal">👤 Cá nhân</option>
+                        <option value="financial">💰 Tài chính</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea id="goal-description" placeholder="Mô tả chi tiết mục tiêu..." class="rounded-textarea"></textarea>
+                </div>
+                <div class="form-group">
                     <input type="datetime-local" id="remind-datetime" class="rounded-input">
-                    <label style="margin-left:12px;">
+                    <label class="checkbox-label">
                         <input type="checkbox" id="remind-repeat"> Lặp lại
                     </label>
+                    <select id="repeat-frequency" class="rounded-input" data-type="select" disabled>
+                        <option value="daily">Hàng ngày</option>
+                        <option value="weekly">Hàng tuần</option>
+                        <option value="monthly">Hàng tháng</option>
+                    </select>
                 </div>
-                <div class="card">
-                    <h2>Danh sách mục tiêu</h2>
-                    <ul id="goal-list" class="goal-list"></ul>
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="smart-tracking"> 🧠 Bật theo dõi thông minh (AI)
+                    </label>
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="goal-sharing"> 👥 Chia sẻ mục tiêu với người khác
+                    </label>
                 </div>
-            </section>
+                <div class="form-actions">
+                    <button id="add-goal-btn" class="primary-btn">🎯 Thêm mục tiêu</button>
+                    <button id="link-resource-btn" class="secondary-btn">🔗 Liên kết tài liệu</button>
+                    <button id="ai-optimize-btn" class="ai-btn">🤖 AI Tối ưu</button>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📋 Danh sách mục tiêu</h2>
+                <div class="filter-bar">
+                    <input type="text" id="search-goals" placeholder="🔍 Tìm kiếm mục tiêu..." class="search-input">
+                    <select id="category-filter-goals" class="filter-select">
+                        <option value="">Tất cả danh mục</option>
+                        <option value="study">📚 Học tập</option>
+                        <option value="career">💼 Sự nghiệp</option>
+                        <option value="health">🏃‍♂️ Sức khỏe</option>
+                        <option value="personal">👤 Cá nhân</option>
+                        <option value="financial">💰 Tài chính</option>
+                    </select>
+                    <select id="status-filter" class="filter-select">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="active">🔄 Đang thực hiện</option>
+                        <option value="completed">✅ Hoàn thành</option>
+                        <option value="paused">⏸ Tạm dừng</option>
+                    </select>
+                    <select id="priority-filter" class="filter-select">
+                        <option value="">Tất cả ưu tiên</option>
+                        <option value="high">🔴 Cao</option>
+                        <option value="medium">🟡 Trung bình</option>
+                        <option value="low">🟢 Thấp</option>
+                    </select>
+                </div>
+                <ul id="goal-list" class="goal-list"></ul>
+            </div>
+
+            <!-- Progress Analytics -->
+            <div class="card analytics-section">
+                <h2>📊 Analytics & Insights</h2>
+                <div class="analytics-grid">
+                    <div class="chart-container">
+                        <h3>Tiến độ mục tiêu</h3>
+                        <div class="progress-chart" id="progress-chart">
+                            <div class="chart-placeholder">
+                                <div class="chart-bar" style="height: 75%">
+                                    <span class="chart-label">Học tập</span>
+                                    <span class="chart-value">75%</span>
+                                </div>
+                                <div class="chart-bar" style="height: 60%">
+                                    <span class="chart-label">Sự nghiệp</span>
+                                    <span class="chart-value">60%</span>
+                                </div>
+                                <div class="chart-bar" style="height: 90%">
+                                    <span class="chart-label">Sức khỏe</span>
+                                    <span class="chart-value">90%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="insights-container">
+                        <h3>AI Insights</h3>
+                        <div class="insight-item">
+                            <div class="insight-icon">💡</div>
+                            <div class="insight-content">
+                                <h4>Bạn đang làm rất tốt với mục tiêu sức khỏe!</h4>
+                                <p>90% tiến độ - hãy duy trì động lực này</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🎯</div>
+                            <div class="insight-content">
+                                <h4>Mục tiêu học tập cần thêm thời gian</h4>
+                                <p>Thử chia nhỏ mục tiêu để dễ đạt được hơn</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🔗 Tài liệu hỗ trợ mục tiêu</h2>
+                <div id="goal-resources" class="goal-resources">
+                    <p class="empty-state">Chưa có tài liệu nào được liên kết với mục tiêu</p>
+                </div>
+                <div class="resource-actions">
+                    <a href="resources-pro.html" class="resource-link-btn">📚 Quản lý tài liệu Pro</a>
+                </div>
+            </div>
         </main>
     </div>
-    <script src="scripts/life-goals.js"></script>
+
+    <!-- Upgrade Modal -->
+    <div id="upgrade-modal" class="modal-overlay" style="display: none;">
+        <div class="modal upgrade-modal">
+            <div class="modal-header">
+                <h3>🚀 Nâng cấp lên Premium</h3>
+                <button class="close-btn" onclick="closeUpgradeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="pricing-card">
+                    <div class="plan-name">Premium Plan</div>
+                    <div class="plan-price">$9.99<span>/tháng</span></div>
+                    <ul class="plan-features">
+                        <li>✅ Mục tiêu không giới hạn</li>
+                        <li>✅ AI Goal Suggestions</li>
+                        <li>✅ Advanced Analytics</li>
+                        <li>✅ Goal Templates</li>
+                        <li>✅ Smart Reminders</li>
+                        <li>✅ Priority Support</li>
+                    </ul>
+                    <button class="upgrade-now-btn">Nâng cấp ngay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/lifegoals.js"></script>
 </body>
 </html> 

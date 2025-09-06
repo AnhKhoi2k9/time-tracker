@@ -141,7 +141,6 @@ function handleGoogleLogin() {
 }
 
 // Kiểm tra trạng thái đăng nhập khi trang load
-<<<<<<< HEAD
 // document.addEventListener('DOMContentLoaded', function() {
 //     // Kiểm tra xem người dùng đã đăng nhập chưa
 //     firebase.auth().onAuthStateChanged(function(user) {
@@ -151,17 +150,6 @@ function handleGoogleLogin() {
 //         }
 //     });
 // });
-=======
-document.addEventListener('DOMContentLoaded', function() {
-    // Kiểm tra xem người dùng đã đăng nhập chưa
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            // Người dùng đã đăng nhập, chuyển hướng
-            window.location.href = "index2.html";
-        }
-    });
-});
->>>>>>> 81e138b0c4aa620d2413754225f5abedfd7faacb
 
 loginForm.addEventListener("submit", handleLogin);
 googleLoginBtn.addEventListener("click", handleGoogleLogin);

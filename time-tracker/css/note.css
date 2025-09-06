@@ -22,15 +22,9 @@ body {
 }
 
 .main-content {
-<<<<<<< HEAD
   max-width: 900px;
   margin: 0 auto;
   padding: 0 32px;
-=======
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 50px;
->>>>>>> 81e138b0c4aa620d2413754225f5abedfd7faacb
 }
 
 h1 {
@@ -109,19 +103,6 @@ h1 {
 .add-note-form button:hover {
   background: #4f9cff;
   color: #fff;
-<<<<<<< HEAD
-=======
-  border: none;
-  border-radius: 6px;
-  padding: 8px 16px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.add-note-form button:hover {
-  background: #3578e5;
->>>>>>> 81e138b0c4aa620d2413754225f5abedfd7faacb
 }
 
 .notes-list {
@@ -143,15 +124,12 @@ h1 {
   transition: transform 0.15s, box-shadow 0.15s;
 }
 
-<<<<<<< HEAD
 .note-item:hover {
   transform: translateY(-2px) scale(1.01);
   box-shadow: 0 8px 24px #0005;
   background: linear-gradient(90deg, #232346 80%, #4f9cff 100%);
 }
 
-=======
->>>>>>> 81e138b0c4aa620d2413754225f5abedfd7faacb
 .note-date {
   font-size: 14px;
   color: #bdbdbd;
@@ -204,7 +182,6 @@ h1 {
 
 @media (max-width: 1000px) {
   .main-content {
-<<<<<<< HEAD
     padding: 0 10px;
   }
   .sidebar {
@@ -212,8 +189,5 @@ h1 {
   }
   h1 {
     font-size: 28px;
-=======
-    padding: 0 16px;
->>>>>>> 81e138b0c4aa620d2413754225f5abedfd7faacb
   }
 }

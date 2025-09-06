@@ -3,25 +3,305 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resources - StudyZen</title>
-    <link rel="stylesheet" href="./css/resource.css">
+    <title>Resources Pro - StudyZen</title>
+    <link rel="stylesheet" href="./css/resources.css">
 </head>
 <body>
     <div class="container">
+        <!-- Pro Banner -->
+        <div class="pro-banner">
+            <div class="pro-badge">⭐ PRO</div>
+            <div class="pro-info">
+                <h3>Resources Pro</h3>
+                <p>Quản lý tài liệu thông minh với AI, storage không giới hạn và collaboration</p>
+            </div>
+            <button class="upgrade-btn" onclick="showUpgradeModal()">Nâng cấp Premium</button>
+        </div>
+
+        <header class="page-header">
+            <div class="header-content">
+                <h1>📚 Resources Pro</h1>
+                <p class="page-description">Quản lý tài liệu học tập và tài nguyên hỗ trợ mục tiêu với AI và storage nâng cao</p>
+            </div>
+            <nav class="top-nav">
+                <a href="life-goals-pro.html" class="nav-link">🎯 Life Goals Pro</a>
+                <a href="resources.html" class="nav-link">📱 Phiên bản thường</a>
+                <a href="pro-signup.html" class="nav-link pro-link">⭐ Quản lý tài khoản Pro</a>
+                <a href="index2.html" class="nav-link">🏠 Dashboard</a>
+            </nav>
+        </header>
+
         <main class="main-content">
-            <section id="resources-section">
-                <h1>Resources</h1>
-                <div class="card">
-                    <h2>Upload tài liệu</h2>
-                    <input type="file" id="resource-file-input" multiple>
-                    <button id="upload-resource-btn">Upload</button>
+            <!-- Advanced Stats Grid -->
+            <div class="stats-grid pro-stats">
+                <div class="stat-card pro-card">
+                    <div class="stat-icon">📁</div>
+                    <div class="stat-content">
+                        <h3>Tổng tài liệu</h3>
+                        <p class="stat-number" id="total-resources">0</p>
+                        <div class="stat-trend">
+                            <span class="trend-up">↗️ +18%</span>
+                            <span class="trend-period">so với tháng trước</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="card">
-                    <h2>Danh sách tài liệu đã lưu</h2>
-                    <ul id="resource-list"></ul>
+                <div class="stat-card pro-card">
+                    <div class="stat-icon">📊</div>
+                    <div class="stat-content">
+                        <h3>Dung lượng</h3>
+                        <p class="stat-number" id="total-size">0 MB</p>
+                        <div class="stat-trend">
+                            <span class="trend-up">↗️ +25%</span>
+                            <span class="trend-period">so với tháng trước</span>
+                        </div>
+                    </div>
                 </div>
-            </section>
+                <div class="stat-card pro-card">
+                    <div class="stat-icon">🎯</div>
+                    <div class="stat-content">
+                        <h3>Liên kết mục tiêu</h3>
+                        <p class="stat-number" id="linked-goals">0</p>
+                        <div class="stat-trend">
+                            <span class="trend-up">↗️ +22%</span>
+                            <span class="trend-period">so với tháng trước</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card pro-card">
+                    <div class="stat-icon">🚀</div>
+                    <div class="stat-content">
+                        <h3>Storage Used</h3>
+                        <p class="stat-number" id="storage-used">2.5 GB</p>
+                        <div class="storage-bar">
+                            <div class="storage-progress" style="width: 25%"></div>
+                        </div>
+                        <span class="storage-limit">10 GB / Unlimited</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Resource Assistant -->
+            <div class="card ai-assistant">
+                <h2>🤖 AI Resource Assistant</h2>
+                <div class="ai-content">
+                    <div class="ai-avatar">🤖</div>
+                    <div class="ai-message">
+                        <p>Dựa trên mục tiêu của bạn, tôi gợi ý:</p>
+                        <div class="ai-suggestions">
+                            <div class="ai-suggestion">
+                                <span class="suggestion-icon">📚</span>
+                                <span class="suggestion-text">Tài liệu tiếng Anh cho mục tiêu học tập</span>
+                                <button class="find-resources-btn">🔍 Tìm kiếm</button>
+                            </div>
+                            <div class="ai-suggestion">
+                                <span class="suggestion-icon">💼</span>
+                                <span class="suggestion-text">Ebooks về phát triển sự nghiệp</span>
+                                <button class="find-resources-btn">🔍 Tìm kiếm</button>
+                            </div>
+                            <div class="ai-suggestion">
+                                <span class="suggestion-icon">🏃‍♂️</span>
+                                <span class="suggestion-text">Video hướng dẫn tập thể dục</span>
+                                <button class="find-resources-btn">🔍 Tìm kiếm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card upload-section">
+                <h2>📤 Upload tài liệu mới</h2>
+                <div class="upload-area">
+                    <input type="file" id="resource-file-input" multiple accept=".pdf,.doc,.docx,.txt,.jpg,.png,.mp4,.mp3,.zip,.rar">
+                    <div class="upload-info">
+                        <p>Kéo thả file vào đây hoặc click để chọn</p>
+                        <p class="file-types">Hỗ trợ: PDF, DOC, TXT, JPG, PNG, MP4, MP3, ZIP, RAR</p>
+                        <p class="pro-feature">✨ Pro: Không giới hạn dung lượng file</p>
+                    </div>
+                </div>
+                <div class="upload-actions">
+                    <button id="upload-resource-btn" class="primary-btn">📤 Upload</button>
+                    <button id="link-goal-btn" class="secondary-btn">🎯 Liên kết với mục tiêu</button>
+                    <button id="ai-organize-btn" class="ai-btn">🤖 AI Tổ chức</button>
+                </div>
+            </div>
+
+            <!-- Advanced Resource Management -->
+            <div class="card">
+                <h2>📋 Danh sách tài liệu</h2>
+                <div class="filter-bar">
+                    <input type="text" id="search-resources" placeholder="🔍 Tìm kiếm tài liệu..." class="search-input">
+                    <select id="category-filter" class="filter-select">
+                        <option value="">Tất cả danh mục</option>
+                        <option value="study">📚 Học tập</option>
+                        <option value="work">💼 Công việc</option>
+                        <option value="personal">👤 Cá nhân</option>
+                        <option value="health">🏃‍♂️ Sức khỏe</option>
+                    </select>
+                    <select id="type-filter" class="filter-select">
+                        <option value="">Tất cả loại</option>
+                        <option value="document">📄 Tài liệu</option>
+                        <option value="image">🖼️ Hình ảnh</option>
+                        <option value="video">🎥 Video</option>
+                        <option value="audio">🎵 Âm thanh</option>
+                    </select>
+                    <select id="size-filter" class="filter-select">
+                        <option value="">Tất cả kích thước</option>
+                        <option value="small">📏 < 1MB</option>
+                        <option value="medium">📏 1-10MB</option>
+                        <option value="large">📏 > 10MB</option>
+                    </select>
+                </div>
+                <div class="view-options">
+                    <button class="view-btn active" data-view="list">📋 Danh sách</button>
+                    <button class="view-btn" data-view="grid">🔲 Lưới</button>
+                    <button class="view-btn" data-view="timeline">⏰ Timeline</button>
+                </div>
+                <ul id="resource-list" class="resource-list"></ul>
+            </div>
+
+            <!-- Resource Analytics -->
+            <div class="card analytics-section">
+                <h2>📊 Resource Analytics</h2>
+                <div class="analytics-grid">
+                    <div class="chart-container">
+                        <h3>Phân bố tài liệu theo danh mục</h3>
+                        <div class="pie-chart" id="category-chart">
+                            <div class="chart-placeholder">
+                                <div class="pie-segment" style="--start: 0deg; --end: 120deg; --color: #ff6b6b;">
+                                    <span class="segment-label">Học tập (40%)</span>
+                                </div>
+                                <div class="pie-segment" style="--start: 120deg; --end: 240deg; --color: #4ecdc4;">
+                                    <span class="segment-label">Công việc (33%)</span>
+                                </div>
+                                <div class="pie-segment" style="--start: 240deg; --end: 360deg; --color: #45b7d1;">
+                                    <span class="segment-label">Cá nhân (27%)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="insights-container">
+                        <h3>Storage Insights</h3>
+                        <div class="insight-item">
+                            <div class="insight-icon">💾</div>
+                            <div class="insight-content">
+                                <h4>Dung lượng sử dụng tối ưu</h4>
+                                <p>Bạn đang sử dụng 25% storage - còn nhiều không gian!</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">📈</div>
+                            <div class="insight-content">
+                                <h4>Tăng trưởng tài liệu ổn định</h4>
+                                <p>18% tăng trưởng so với tháng trước</p>
+                            </div>
+                        </div>
+                        <div class="insight-item">
+                            <div class="insight-icon">🎯</div>
+                            <div class="insight-content">
+                                <h4>Liên kết mục tiêu hiệu quả</h4>
+                                <p>85% tài liệu được liên kết với mục tiêu cụ thể</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Collaboration Features -->
+            <div class="card collaboration-section">
+                <h2>👥 Collaboration & Sharing</h2>
+                <div class="collab-features">
+                    <div class="collab-feature">
+                        <div class="feature-icon">🔗</div>
+                        <div class="feature-content">
+                            <h3>Chia sẻ tài liệu</h3>
+                            <p>Chia sẻ tài liệu với bạn bè và team</p>
+                            <button class="share-btn">Chia sẻ</button>
+                        </div>
+                    </div>
+                    <div class="collab-feature">
+                        <div class="feature-icon">👥</div>
+                        <div class="feature-content">
+                            <h3>Team Folders</h3>
+                            <p>Tạo thư mục dùng chung cho team</p>
+                            <button class="create-team-btn">Tạo team</button>
+                        </div>
+                    </div>
+                    <div class="collab-feature">
+                        <div class="feature-icon">💬</div>
+                        <div class="feature-content">
+                            <h3>Comments & Notes</h3>
+                            <p>Thêm bình luận và ghi chú trên tài liệu</p>
+                            <button class="add-note-btn">Thêm ghi chú</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Smart Organization -->
+            <div class="card smart-organization">
+                <h2>🧠 Smart Organization</h2>
+                <div class="smart-features">
+                    <div class="smart-feature">
+                        <div class="feature-icon">📁</div>
+                        <div class="feature-content">
+                            <h3>Auto Categorization</h3>
+                            <p>AI tự động phân loại tài liệu dựa trên nội dung</p>
+                            <button class="enable-ai-btn">Bật AI</button>
+                        </div>
+                    </div>
+                    <div class="smart-feature">
+                        <div class="feature-icon">🔍</div>
+                        <div class="feature-content">
+                            <h3>Smart Search</h3>
+                            <p>Tìm kiếm thông minh bằng từ khóa và nội dung</p>
+                            <button class="test-search-btn">Thử ngay</button>
+                        </div>
+                    </div>
+                    <div class="smart-feature">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-content">
+                            <h3>Usage Analytics</h3>
+                            <p>Theo dõi tần suất sử dụng và tương tác</p>
+                            <button class="view-analytics-btn">Xem chi tiết</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🎯 Tài liệu liên kết với mục tiêu</h2>
+                <div id="linked-resources" class="linked-resources">
+                    <p class="empty-state">Chưa có tài liệu nào được liên kết với mục tiêu</p>
+                </div>
+            </div>
         </main>
     </div>
+
+    <!-- Upgrade Modal -->
+    <div id="upgrade-modal" class="modal-overlay" style="display: none;">
+        <div class="modal upgrade-modal">
+            <div class="modal-header">
+                <h3>🚀 Nâng cấp lên Premium</h3>
+                <button class="close-btn" onclick="closeUpgradeModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="pricing-card">
+                    <div class="plan-name">Premium Plan</div>
+                    <div class="plan-price">$9.99<span>/tháng</span></div>
+                    <ul class="plan-features">
+                        <li>✅ Storage không giới hạn</li>
+                        <li>✅ AI Resource Assistant</li>
+                        <li>✅ Advanced Analytics</li>
+                        <li>✅ Collaboration Features</li>
+                        <li>✅ File Versioning</li>
+                        <li>✅ Priority Support</li>
+                    </ul>
+                    <button class="upgrade-now-btn">Nâng cấp ngay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/resources.js"></script>
 </body>
 </html> 
