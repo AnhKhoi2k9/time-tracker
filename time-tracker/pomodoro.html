@@ -14,7 +14,7 @@
         <div class="nav-container">
             <div class="logo">
                 <i class="fas fa-clock"></i>
-                <span>Dream Pomodoro</span>
+                
             </div>
             <ul class="nav-menu">
                 <li class="nav-item">
@@ -40,7 +40,7 @@
     </header>
     <div class="layout">
         <aside class="sidebar">
-            <div class="logo">StudyZen</div>
+            <div class="logo">Time-tracker</div>
             <nav>
                 <ul>
                     <li data-page="dashboard"><a href="index2.html"><span class="icon">▦</span>Dashboard</a></li>
@@ -145,108 +145,7 @@
         </div>
     </div>
 
-    <!-- Nội dung chính của ứng dụng -->
-    <div class="main-content">
-        <!-- Phần Pomodoro Timer -->
-        <section id="pomodoro-section" class="section active">
-            <div class="container">
-                <h1><i class="fas fa-clock"></i> Dream Pomodoro</h1>
-                
-                <!-- Hiển thị bộ đếm thời gian -->
-                <div class="timer-display" id="timer">25:00</div>
-                
-                <!-- Thanh tiến trình -->
-                <div class="progress-container">
-                    <div class="progress-bar" id="progress-bar"></div>
-                </div>
-                
-                <!-- Chọn chế độ làm việc/nghỉ ngơi -->
-                <div class="mode-selector">
-                    <button class="mode-btn active" data-mode="pomodoro">Pomodoro</button>
-                    <button class="mode-btn" data-mode="short-break">Nghỉ ngắn</button>
-                    <button class="mode-btn" data-mode="long-break">Nghỉ dài</button>
-                </div>
-                
-                <!-- Nút điều khiển timer -->
-                <div class="controls">
-                    <button class="btn btn-primary" id="start-btn">
-                        <i class="fas fa-play"></i> Bắt đầu
-                    </button>
-                    <button class="btn btn-secondary" id="pause-btn" disabled>
-                        <i class="fas fa-pause"></i> Tạm dừng
-                    </button>
-                    <button class="btn btn-secondary" id="reset-btn">
-                        <i class="fas fa-redo"></i> Đặt lại
-                    </button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Phần quản lý công việc -->
-        <section id="tasks-section" class="section">
-            <div class="container">
-                <h2><i class="fas fa-tasks"></i> Quản lý công việc</h2>
-                
-                <div class="task-list">
-                    <!-- Form thêm công việc mới -->
-                    <div class="task-input">
-                        <input type="text" id="task-input" placeholder="Thêm công việc mới...">
-                        <button id="add-task-btn"><i class="fas fa-plus"></i> Thêm</button>
-                    </div>
-                    <!-- Danh sách công việc -->
-                    <ul class="tasks" id="tasks"></ul>
-                </div>
-            </div>
-        </section>
-
-        <!-- Phần âm nhạc với Spotify -->
-        <section id="music-section" class="section">
-            <div class="container">
-                <h2><i class="fas fa-music"></i> Âm nhạc tập trung</h2>
-                
-                <!-- Danh sách các playlist Spotify -->
-                <div class="playlist-selector">
-                    <div class="playlist-item active" data-playlist="37i9dQZF1DX8Uebhn9wzrS" data-theme="deep-focus">
-                        <img src="https://i.pinimg.com/736x/90/70/32/9070324cdfc07c68d60eed0c39e77573.jpg" alt="Deep Focus">
-                        <div class="playlist-info">
-                            <h4>Phòng Làm việc</h4>
-                            <p>Nhạc không lời giúp tập trung sâu</p>
-                        </div>
-                    </div>
-                    
-                    <div class="playlist-item" data-playlist="37i9dQZF1DWZeKCadgRdKQ" data-theme="deep-house">
-                        <img src="https://i.pinimg.com/1200x/31/cb/3d/31cb3de87e3be1236c0371adfabef4d6.jpg" alt="Deep House">
-                        <div class="playlist-info">
-                            <h4>Phòng trà </h4>
-                            <p>Giai điệu sâu lắng giúp tập trung</p>
-                        </div>
-                    </div>
-                    
-                    <div class="playlist-item" data-playlist="37i9dQZF1DX3Ogo9pFvBkY" data-theme="ambient">
-                        <img src="https://i.pinimg.com/originals/d8/9f/a3/d89fa383107571201d3b2673e4e9a51b.gif" alt="Ambient Relaxation">
-                        <div class="playlist-info">
-                            <h4>Quán cafe </h4>
-                            <p>Ấm áp,thư giãn, gần gũi</p>
-                        </div>
-                    </div>
-                    
-                    <div class="playlist-item" data-playlist="37i9dQZF1DX4sWSpwq3LiO" data-theme="piano">
-                        <img src="https://i.pinimg.com/736x/cb/2c/7a/cb2c7ada34f884689685ac2736d9821a.jpg" alt="Peaceful Piano">
-                        <div class="playlist-info">
-                            <h4>Nhà sách</h4>
-                            <p>nhẹ nhàng, du dương và ấm áp </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Nhúng player Spotify -->
-                <div class="spotify-player">
-               <iframe class="spotify-embed" src="https://open.spotify.com/embed/playlist/37i9dQZF1DX8Uebhn9wzrS?utm_source=generator&theme=0" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-                </div>
-            </div>
-        </section>
-    </div>
-
+    
     <footer class="footer">
         <p>Tăng năng suất làm việc của bạn </p>
     </footer>

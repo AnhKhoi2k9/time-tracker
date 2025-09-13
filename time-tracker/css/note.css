@@ -19,6 +19,7 @@ body {
   flex: 1;
   padding: 40px 0;
   min-height: 100vh;
+  margin-left: 320px;
 }
 
 .main-content {
